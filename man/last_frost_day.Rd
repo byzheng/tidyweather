@@ -22,7 +22,7 @@ If latitude information is available in the data, it will be used to determine t
 \item{require_full_year}{Logical. If TRUE, requires exactly 365 or 366 days (default: TRUE)}
 }
 \value{
-An integer representing the day of year for the last frost, or NA if no frost occurs
+An data.frame or tibble representing the day of year for the last frost, or NA if no frost occurs
 }
 \description{
 This function calculates the last frost day from a numeric vector of daily

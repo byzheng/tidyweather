@@ -1,6 +1,3 @@
-library(dplyr)
-library(tibble)
-
 #' Calculate the last frost day
 #'
 #' This function calculates the last frost day from a numeric vector of daily
@@ -12,7 +9,7 @@ library(tibble)
 #'      If latitude information is available in the data, it will be used to determine the hemisphere.
 #' @param require_full_year Logical. If TRUE, requires exactly 365 or 366 days (default: TRUE)
 #'
-#' @return An integer representing the day of year for the last frost, or NA if no frost occurs
+#' @return An data.frame or tibble representing the day of year for the last frost, or NA if no frost occurs
 #' @export
 #'
 #' @examples
@@ -40,17 +37,7 @@ last_frost_day <- function(.data,
 
             # Check for completeness if required
             if (require_full_year) {
-                if (!tibble::has_name(df, "day")) {
-                    stop("Input data should include a column 'day' for day of year.")
-                }
-                if (nrow(df) != 365 && nrow(df) != 366) {
-                    stop("Data does not contain a full year. ", 
-                        "Set require_full_year = FALSE to proceed anyway.")
-                }
-                if (min(df$day) != 1 || max(df$day) != nrow(df)) {
-                    stop("Data does not contain a full year. ", 
-                        "Set require_full_year = FALSE to proceed anyway.")
-                }
+                .check_full_year(df)
             }
 
             # Hemisphere detection
