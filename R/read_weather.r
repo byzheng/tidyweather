@@ -24,7 +24,7 @@ read_weather <- function(file, format = "APSIM", ...) {
     if (is.null(record)) {
         stop("No weather records are found.")
     }
-
+    record <- tibble::tibble(record)
     return(record)
 }
 
