@@ -67,20 +67,17 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/ppd_72150.met"</span>, package <span class="op">=</span> <span class="st">"tidyweather"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">records</span> <span class="op">&lt;-</span> <span class="fu">read_weather</span><span class="op">(</span><span class="va">file</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">records</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   year day radn maxt mint rain evap   vp   code       date  avgt</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 2023 335 26.1 28.7 14.4    0  4.7 16.4 400020 2023-12-01 21.55</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 2023 336 23.0 29.1 15.1    0  5.3 17.4 400020 2023-12-02 22.10</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 2023 337 30.7 27.8 10.0    1  5.5 14.7 400020 2023-12-03 18.90</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 2023 338 31.5 30.4 14.6    0  6.7 14.8 400020 2023-12-04 22.50</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 2023 339 28.5 37.9 15.1    0  7.1 15.2 400020 2023-12-05 26.50</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6 2023 340 25.1 33.3 18.5    0  8.0 14.5 400020 2023-12-06 25.90</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              name number latitude longitude   tav   amp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 WAGGA WAGGA AMO 072150 -35.1583  147.4575 15.77 17.28</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 WAGGA WAGGA AMO 072150 -35.1583  147.4575 15.77 17.28</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 WAGGA WAGGA AMO 072150 -35.1583  147.4575 15.77 17.28</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 WAGGA WAGGA AMO 072150 -35.1583  147.4575 15.77 17.28</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 WAGGA WAGGA AMO 072150 -35.1583  147.4575 15.77 17.28</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6 WAGGA WAGGA AMO 072150 -35.1583  147.4575 15.77 17.28</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 17</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    year   day  radn  maxt  mint  rain  evap    vp   code date        avgt name  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>  <span style="text-decoration: underline;">2</span>023   335  26.1  28.7  14.4     0   4.7  16.4 <span style="text-decoration: underline;">400</span>020 2023-12-01  21.6 WAGGA…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>  <span style="text-decoration: underline;">2</span>023   336  23    29.1  15.1     0   5.3  17.4 <span style="text-decoration: underline;">400</span>020 2023-12-02  22.1 WAGGA…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span>  <span style="text-decoration: underline;">2</span>023   337  30.7  27.8  10       1   5.5  14.7 <span style="text-decoration: underline;">400</span>020 2023-12-03  18.9 WAGGA…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span>  <span style="text-decoration: underline;">2</span>023   338  31.5  30.4  14.6     0   6.7  14.8 <span style="text-decoration: underline;">400</span>020 2023-12-04  22.5 WAGGA…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span>  <span style="text-decoration: underline;">2</span>023   339  28.5  37.9  15.1     0   7.1  15.2 <span style="text-decoration: underline;">400</span>020 2023-12-05  26.5 WAGGA…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span>  <span style="text-decoration: underline;">2</span>023   340  25.1  33.3  18.5     0   8    14.5 <span style="text-decoration: underline;">400</span>020 2023-12-06  25.9 WAGGA…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 5 more variables: number &lt;chr&gt;, latitude &lt;dbl&gt;, longitude &lt;dbl&gt;, tav &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   amp &lt;dbl&gt;</span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
