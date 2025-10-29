@@ -4,11 +4,12 @@
 <url><loc>https://byzheng.github.io/tidyweather/LICENSE-text.html</loc></url>
 <url><loc>https://byzheng.github.io/tidyweather/authors.html</loc></url>
 <url><loc>https://byzheng.github.io/tidyweather/index.html</loc></url>
+<url><loc>https://byzheng.github.io/tidyweather/reference/get_weather_option.html</loc></url>
 <url><loc>https://byzheng.github.io/tidyweather/reference/index.html</loc></url>
 <url><loc>https://byzheng.github.io/tidyweather/reference/last_frost_day.html</loc></url>
 <url><loc>https://byzheng.github.io/tidyweather/reference/number_frost_day.html</loc></url>
 <url><loc>https://byzheng.github.io/tidyweather/reference/read_weather.html</loc></url>
-<url><loc>https://byzheng.github.io/tidyweather/reference/weather_get_option.html</loc></url>
+<url><loc>https://byzheng.github.io/tidyweather/reference/summarise_weather.html</loc></url>
 <url><loc>https://byzheng.github.io/tidyweather/reference/weather_options.html</loc></url>
 <url><loc>https://byzheng.github.io/tidyweather/reference/weather_reset.html</loc></url>
 </urlset>
