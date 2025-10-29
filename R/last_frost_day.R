@@ -19,7 +19,7 @@
 #'     dplyr::group_by(year) |>
 #'     last_frost_day(require_full_year = FALSE)
 last_frost_day <- function(.data,
-                           threshold = 0,
+                           threshold = weather_get_option("extreme.frost_threshold"),
                            hemisphere = "south",
                            require_full_year = TRUE) {
     stopifnot(tibble::is_tibble(.data) || is.data.frame(.data))
@@ -48,7 +48,7 @@ last_frost_day <- function(.data,
         })
 }
 
-.calc_last_frost_day <- function(mint, threshold = 0) {
+.calc_last_frost_day <- function(mint, threshold = weather_get_option("extreme.frost_threshold")) {
     mint_rev <- rev(mint)
     mint_rev[mint_rev < threshold] <- -99999
     min_pos <- which.min(mint_rev)

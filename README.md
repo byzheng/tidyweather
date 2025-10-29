@@ -33,6 +33,7 @@ weather_options()
 
 ### Available Options
 
+- **`require_full_year`**: Logical indicating whether to require a full year of data for calculations (default: TRUE)
 - **`extreme.frost_threshold`**: Temperature threshold (°C) for frost analysis (default: 0)
 
 ### Reset Options

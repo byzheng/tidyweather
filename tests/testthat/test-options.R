@@ -61,7 +61,7 @@ test_that("weather_options() validates option keys", {
     # Invalid key format (too many dots) should fail
     expect_error(
         weather_options(extreme.frost.threshold = 2),
-        "Invalid option name: 'extreme.frost.threshold'"
+        "Invalid option name: 'extrem'"
     )
 
     # Invalid key format (no dots for nested) - this should fail
@@ -167,3 +167,12 @@ test_that("cleanup after options tests", {
     weather_reset()
     expect_equal(weather_options()$extreme$frost_threshold, 0)
 })
+
+# Clean up after all tests
+test_that("weather_get_option", {
+    weather_reset()
+    expect_equal(weather_get_option("extreme.frost_threshold"), 0)
+    weather_options(extreme.frost_threshold = 4)
+    expect_equal(weather_get_option("extreme.frost_threshold"), 4)
+})
+

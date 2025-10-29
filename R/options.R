@@ -3,7 +3,8 @@
 WEATHER_OPTIONS <- settings::options_manager(
     extreme = list(
         frost_threshold = 0
-    )
+    ),
+    require_full_year = TRUE
 )
 
 
@@ -21,6 +22,7 @@ WEATHER_OPTIONS <- settings::options_manager(
 #' @section Supported options:
 #' \describe{
 #'   \item{\code{extreme.frost_threshold}}{ Frost threshold for extreme weather events. }
+#'   \item{\code{require_full_year}}{ Whether to require a full year of data for calculations. }
 #' }
 #'
 #' @return If called with no arguments, returns all current options.
@@ -96,7 +98,21 @@ weather_reset <- function() {
 }
 
 
-weather_get <- function(name) {
+#' Get weather package option
+#'
+#' Retrieves the value of a specified option from the weather package configuration.
+#' This function provides access to package-level settings and preferences.
+#'
+#' @param name A character string specifying the name of the option to retrieve.
+#'
+#' @return The value of the specified option, or NULL if the option does not exist.
+#'
+#' @examples
+#' # Get the default frost threshold
+#' weather_get_option("extreme.frost_threshold")
+#'
+#' @export
+weather_get_option <- function(name) {
     parts <- strsplit(name, "\\.")[[1]]
     if (length(parts) == 1) {
         WEATHER_OPTIONS()[[parts]]

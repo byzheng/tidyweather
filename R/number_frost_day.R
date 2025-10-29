@@ -17,7 +17,7 @@
 #'     dplyr::group_by(year) |> 
 #'     number_frost_day(require_full_year = FALSE)
 number_frost_day <- function(.data,
-                           threshold = 0,
+                           threshold = weather_get_option("extreme.frost_threshold"),
                            require_full_year = TRUE) {
 
     stopifnot(tibble::is_tibble(.data) || is.data.frame(.data))
@@ -42,6 +42,6 @@ number_frost_day <- function(.data,
         })
 }
 
-.calc_number_frost_days <- function(mint, threshold = 0) {
+.calc_number_frost_days <- function(mint, threshold = weather_get_option("extreme.frost_threshold")) {
     sum(mint < threshold, na.rm = TRUE)
 }
