@@ -57,6 +57,44 @@
 <code class="sourceCode R"><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">'byzheng/tidyweather'</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
+<h2 id="configuration">Configuration<a class="anchor" aria-label="anchor" href="#configuration"></a>
+</h2>
+<p>The <code>tidyweather</code> package provides a flexible options system to customize default behaviors for weather analysis. You can configure settings like frost thresholds and other extreme weather parameters.</p>
+<div class="section level3">
+<h3 id="setting-options">Setting Options<a class="anchor" aria-label="anchor" href="#setting-options"></a>
+</h3>
+<p>Use <code><a href="reference/weather_options.html">weather_options()</a></code> to view or modify package settings:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyweather.bangyou.me/" class="external-link">tidyweather</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># View all current options</span></span>
+<span><span class="fu"><a href="reference/weather_options.html">weather_options</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Set frost threshold to 2°C</span></span>
+<span><span class="fu"><a href="reference/weather_options.html">weather_options</a></span><span class="op">(</span>extreme.frost_threshold <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># View updated options</span></span>
+<span><span class="fu"><a href="reference/weather_options.html">weather_options</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="available-options">Available Options<a class="anchor" aria-label="anchor" href="#available-options"></a>
+</h3>
+<ul>
+<li>
+<strong><code>require_full_year</code></strong>: Logical indicating whether to require a full year of data for calculations (default: TRUE)</li>
+<li>
+<strong><code>extreme.frost_threshold</code></strong>: Temperature threshold (°C) for frost analysis (default: 0)</li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="reset-options">Reset Options<a class="anchor" aria-label="anchor" href="#reset-options"></a>
+</h3>
+<p>To restore all options to their defaults:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/weather_reset.html">weather_reset</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+</div>
+</div>
+<div class="section level2">
 <h2 id="data-sources">Data Sources<a class="anchor" aria-label="anchor" href="#data-sources"></a>
 </h2>
 <p>This package includes example weather data sourced from the SILO database, operated by the Queensland Department of Environment, Science and Innovation.</p>
