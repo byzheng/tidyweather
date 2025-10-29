@@ -3,3 +3,5 @@
 export(last_frost_day)
 export(number_frost_day)
 export(read_weather)
+export(weather_options)
+export(weather_reset)

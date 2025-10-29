@@ -32,6 +32,6 @@ minimum temperatures using tidyverse principles.
 file <- system.file("extdata/ppd_72150.met", package = "tidyweather")
 records <- read_weather(file)
 records |>
-    dplyr::group_by(year) |> 
+    dplyr::group_by(year) |>
     last_frost_day(require_full_year = FALSE)
 }

@@ -16,13 +16,12 @@
 #' file <- system.file("extdata/ppd_72150.met", package = "tidyweather")
 #' records <- read_weather(file)
 #' records |>
-#'     dplyr::group_by(year) |> 
+#'     dplyr::group_by(year) |>
 #'     last_frost_day(require_full_year = FALSE)
 last_frost_day <- function(.data,
                            threshold = 0,
                            hemisphere = "south",
                            require_full_year = TRUE) {
-
     stopifnot(tibble::is_tibble(.data) || is.data.frame(.data))
     stopifnot(is.numeric(threshold) && length(threshold) == 1)
     stopifnot(is.logical(require_full_year) && length(require_full_year) == 1)
@@ -40,30 +39,21 @@ last_frost_day <- function(.data,
                 .check_full_year(df)
             }
 
-            # Hemisphere detection
-            if (tibble::has_name(df, "latitude")) {
-                if (length(unique(df$latitude)) != 1) {
-                    stop("Latitude values are not consistent within a group.")
-                }
-                if (df$latitude[1] < 0) {
-                    hemisphere <- "south"
-                } else {
-                    hemisphere <- "north"
-                }
-            }
-            match.arg(hemisphere, c("south", "north"))
+            hemisphere <- .detect_hemisphere(df, hemisphere)
             if (hemisphere == "north") {
                 stop("Northern hemisphere calculations not yet implemented")
             }
-            # Main calculation
-            mint <- rev(df$mint)
-            mint[mint < threshold] <- -99999
-            min_pos <- which.min(mint)
-            if (min(mint) > -99999) {
-                return(tibble::tibble(last_frost_day = NA_integer_))
-            }
-            min_pos <- length(mint) + 1 - min_pos
-
-            tibble::tibble(last_frost_day = min_pos)
+            res <- .calc_last_frost_day(df$mint, threshold)
+            tibble::tibble(last_frost_day = res)
         })
+}
+
+.calc_last_frost_day <- function(mint, threshold = 0) {
+    mint_rev <- rev(mint)
+    mint_rev[mint_rev < threshold] <- -99999
+    min_pos <- which.min(mint_rev)
+    if (min(mint_rev) > -99999) {
+        return(NA_integer_)
+    }
+    length(mint_rev) + 1 - min_pos
 }

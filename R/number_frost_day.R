@@ -37,7 +37,11 @@ number_frost_day <- function(.data,
             }
 
             # Main calculation
-            frost_days <- sum(df$mint < threshold, na.rm = TRUE)
+            frost_days <- .calc_number_frost_days(df$mint, threshold)
             tibble::tibble(number_frost_days = frost_days)
         })
+}
+
+.calc_number_frost_days <- function(mint, threshold = 0) {
+    sum(mint < threshold, na.rm = TRUE)
 }

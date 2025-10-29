@@ -15,7 +15,8 @@ Depends: R (>= 4.1.0)
 Imports:
     stringr,
     tibble,
-    dplyr
+    dplyr,
+    settings
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3

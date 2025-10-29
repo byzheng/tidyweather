@@ -10,6 +10,38 @@ Currently on [Github](https://github.com/byzheng/tidyweather) only. Install with
 remotes::install_github('byzheng/tidyweather')
 ```
 
+## Configuration
+
+The `tidyweather` package provides a flexible options system to customize default behaviors for weather analysis. You can configure settings like frost thresholds and other extreme weather parameters.
+
+### Setting Options
+
+Use `weather_options()` to view or modify package settings:
+
+```r
+library(tidyweather)
+
+# View all current options
+weather_options()
+
+# Set frost threshold to 2°C
+weather_options(extreme.frost_threshold = 2)
+
+# View updated options
+weather_options()
+```
+
+### Available Options
+
+- **`extreme.frost_threshold`**: Temperature threshold (°C) for frost analysis (default: 0)
+
+### Reset Options
+
+To restore all options to their defaults:
+
+```r
+weather_reset()
+```
 
 ## Data Sources
 
