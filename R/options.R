@@ -124,10 +124,10 @@ weather_reset <- function() {
 #'
 #' @examples
 #' # Get the default frost threshold
-#' weather_get_option("extreme.frost_threshold")
+#' get_weather_option("extreme.frost_threshold")
 #'
 #' @export
-weather_get_option <- function(name) {
+get_weather_option <- function(name) {
     parts <- strsplit(name, "\\.")[[1]]
     if (length(parts) == 1) {
         WEATHER_OPTIONS()[[parts]]

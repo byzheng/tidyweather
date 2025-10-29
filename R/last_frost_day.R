@@ -19,9 +19,9 @@
 #'     dplyr::group_by(year) |>
 #'     last_frost_day(require_full_year = FALSE)
 last_frost_day <- function(.data,
-                           threshold = weather_get_option("extreme.frost_threshold"),
+                           threshold = get_weather_option("extreme.frost_threshold"),
                            hemisphere = "south",
-                           require_full_year = weather_get_option("require_full_year")) {
+                           require_full_year = get_weather_option("require_full_year")) {
     stopifnot(tibble::is_tibble(.data) || is.data.frame(.data))
     stopifnot(is.numeric(threshold) && length(threshold) == 1)
     stopifnot(is.logical(require_full_year) && length(require_full_year) == 1)
@@ -43,12 +43,13 @@ last_frost_day <- function(.data,
             if (hemisphere == "north") {
                 stop("Northern hemisphere calculations not yet implemented")
             }
-            res <- .calc_last_frost_day(df$mint, threshold)
+            res <- .calc_last_frost_day(df$mint, hemisphere, threshold)
             tibble::tibble(last_frost_day = res)
         })
 }
 
-.calc_last_frost_day <- function(mint, threshold = weather_get_option("extreme.frost_threshold")) {
+.calc_last_frost_day <- function(mint, hemisphere, threshold = get_weather_option("extreme.frost_threshold")) {
+    stopifnot(hemisphere == c("south"))
     mint_rev <- rev(mint)
     mint_rev[mint_rev < threshold] <- -99999
     min_pos <- which.min(mint_rev)

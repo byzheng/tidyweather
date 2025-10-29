@@ -195,10 +195,10 @@ test_that("cleanup after options tests", {
 })
 
 # Clean up after all tests
-test_that("weather_get_option", {
+test_that("get_weather_option", {
     weather_reset()
-    expect_equal(weather_get_option("extreme.frost_threshold"), 0)
+    expect_equal(get_weather_option("extreme.frost_threshold"), 0)
     weather_options(extreme.frost_threshold = 4)
-    expect_equal(weather_get_option("extreme.frost_threshold"), 4)
+    expect_equal(get_weather_option("extreme.frost_threshold"), 4)
 })
 

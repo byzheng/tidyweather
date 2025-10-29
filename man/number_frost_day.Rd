@@ -6,8 +6,8 @@
 \usage{
 number_frost_day(
   .data,
-  threshold = weather_get_option("extreme.frost_threshold"),
-  require_full_year = weather_get_option("require_full_year")
+  threshold = get_weather_option("extreme.frost_threshold"),
+  require_full_year = get_weather_option("require_full_year")
 )
 }
 \arguments{
