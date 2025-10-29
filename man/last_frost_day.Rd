@@ -6,9 +6,9 @@
 \usage{
 last_frost_day(
   .data,
-  threshold = 0,
+  threshold = weather_get_option("extreme.frost_threshold"),
   hemisphere = "south",
-  require_full_year = TRUE
+  require_full_year = weather_get_option("require_full_year")
 )
 }
 \arguments{

@@ -4,7 +4,11 @@
 \alias{number_frost_day}
 \title{Calculate the number of frost days}
 \usage{
-number_frost_day(.data, threshold = 0, require_full_year = TRUE)
+number_frost_day(
+  .data,
+  threshold = weather_get_option("extreme.frost_threshold"),
+  require_full_year = weather_get_option("require_full_year")
+)
 }
 \arguments{
 \item{.data}{A data frame or tibble containing daily minimum temperatures in a column named "mint".}

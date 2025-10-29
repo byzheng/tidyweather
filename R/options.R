@@ -62,6 +62,10 @@ weather_options <- function(...) {
                 stop(sprintf("Unknown group: '%s' (must be 'extreme')", group), call. = FALSE)
             }
 
+            # Get current value to check type
+            current_value <- WEATHER_OPTIONS()[[group]][[subkey]]
+            .check_option_value(current_value, value)
+
             current <- WEATHER_OPTIONS()[[group]]
             if (is.null(current)) {
                 current <- list()
@@ -73,8 +77,19 @@ weather_options <- function(...) {
             update_args[[group]] <- current
             do.call(WEATHER_OPTIONS, update_args)
         } else {
-            # Handle top-level fields - but none are currently supported
-            stop(sprintf("Top-level option '%s' is not supported", key), call. = FALSE)
+            # Handle top-level options
+            if (!key %in% c("require_full_year")) {
+                stop(sprintf("Unknown top-level option: '%s' (must be 'require_full_year')", key), call. = FALSE)
+            }
+            
+            # Get current value to check type
+            current_value <- WEATHER_OPTIONS()[[key]]
+            .check_option_value(current_value, value)
+            
+            # Update the top-level option
+            update_args <- list()
+            update_args[[key]] <- value
+            do.call(WEATHER_OPTIONS, update_args)
         }
     }
     
@@ -118,5 +133,18 @@ weather_get_option <- function(name) {
         WEATHER_OPTIONS()[[parts]]
     } else {
         WEATHER_OPTIONS()[[parts[1]]][[parts[2]]]
+    }
+}
+
+
+.check_option_value <- function(current_value, value) {
+    if (is.null(value)) {
+        stop("Option value cannot be NULL", call. = FALSE)
+    }
+    if (class(value) != class(current_value)) {
+        stop(sprintf("Option expects %s, got %s", class(current_value), class(value)), call. = FALSE)
+    }
+    if (length(current_value) != length(value)) {
+        stop(sprintf("Option expects length %d, got length %d", length(current_value), length(value)), call. = FALSE)
     }
 }

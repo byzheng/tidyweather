@@ -21,7 +21,7 @@
 last_frost_day <- function(.data,
                            threshold = weather_get_option("extreme.frost_threshold"),
                            hemisphere = "south",
-                           require_full_year = TRUE) {
+                           require_full_year = weather_get_option("require_full_year")) {
     stopifnot(tibble::is_tibble(.data) || is.data.frame(.data))
     stopifnot(is.numeric(threshold) && length(threshold) == 1)
     stopifnot(is.logical(require_full_year) && length(require_full_year) == 1)

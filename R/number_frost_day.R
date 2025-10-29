@@ -18,7 +18,7 @@
 #'     number_frost_day(require_full_year = FALSE)
 number_frost_day <- function(.data,
                            threshold = weather_get_option("extreme.frost_threshold"),
-                           require_full_year = TRUE) {
+                           require_full_year = weather_get_option("require_full_year")) {
 
     stopifnot(tibble::is_tibble(.data) || is.data.frame(.data))
     stopifnot(is.numeric(threshold) && length(threshold) == 1)

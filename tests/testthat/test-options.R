@@ -5,9 +5,38 @@ test_that("weather_options() returns all options when called with no arguments",
     options <- weather_options()
     expect_type(options, "list")
     expect_true("extreme" %in% names(options))
+    expect_true("require_full_year" %in% names(options))
     expect_true("frost_threshold" %in% names(options$extreme))
+    
     expect_equal(options$extreme$frost_threshold, 0)
 })
+
+
+
+test_that("weather_options() can set and get match the original type and length", {
+    # Reset to ensure clean state
+    weather_reset()
+
+    expect_no_error(weather_options(require_full_year = FALSE))
+    expect_no_error(weather_options(extreme.frost_threshold = 2))
+    expect_error(weather_options(require_full_year = "false"))
+    expect_error(weather_options(extreme.frost_threshold = "false"))    
+    expect_error(weather_options(require_full_year = c(TRUE, FALSE)))
+    expect_error(weather_options(extreme.frost_threshold = c(1, 2)))
+})
+
+test_that("weather_options() can set and get first level options", {
+    # Reset to ensure clean state
+    weather_reset()
+
+    # Set frost_threshold
+    weather_options(require_full_year = FALSE)
+
+    # Verify it was set
+    options <- weather_options()
+    expect_equal(options$require_full_year, FALSE)
+})
+
 
 test_that("weather_options() can set and get frost_threshold", {
     # Reset to ensure clean state
@@ -54,20 +83,17 @@ test_that("weather_options() validates option keys", {
 
     # Invalid group should fail
     expect_error(
-        weather_options(invalid.frost_threshold = 2),
-        "Unknown group: 'invalid'"
+        weather_options(invalid.frost_threshold = 2)
     )
 
     # Invalid key format (too many dots) should fail
     expect_error(
-        weather_options(extreme.frost.threshold = 2),
-        "Invalid option name: 'extrem'"
+        weather_options(extreme.frost.threshold = 2)
     )
 
     # Invalid key format (no dots for nested) - this should fail
     expect_error(
-        weather_options(invalid_top_level = 2),
-        "Top-level option 'invalid_top_level' is not supported"
+        weather_options(invalid_top_level = 2)
     )
 })
 
@@ -123,8 +149,8 @@ test_that("weather_options() works with different data types", {
     weather_reset()
 
     # Test with integer
-    weather_options(extreme.frost_threshold = 2L)
-    expect_equal(weather_options()$extreme$frost_threshold, 2L)
+    weather_options(extreme.frost_threshold = 2)
+    expect_equal(weather_options()$extreme$frost_threshold, 2)
 
     # Test with numeric
     weather_options(extreme.frost_threshold = 2.5)

@@ -25,6 +25,7 @@ the tidyweather package.
 
 \describe{
 \item{\code{extreme.frost_threshold}}{ Frost threshold for extreme weather events. }
+\item{\code{require_full_year}}{ Whether to require a full year of data for calculations. }
 }
 }
 
