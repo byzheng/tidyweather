@@ -1,7 +1,5 @@
 
-[![R-CMD-check.yaml](https://github.com/byzheng/tidyweather/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/byzheng/tidyweather/actions/workflows/R-CMD-check.yaml)
-
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/tidyweather)](https://cran.r-project.org/package=tidyweather)
+[![R-CMD-check](https://github.com/byzheng/tidyweather/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/byzheng/tidyweather/actions/workflows/R-CMD-check.yaml)[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/tidyweather)](https://cran.r-project.org/package=tidyweather)
 
 [![](http://cranlogs.r-pkg.org/badges/grand-total/tidyweather?color=green)](https://cran.r-project.org/package=tidyweather)
 [![](http://cranlogs.r-pkg.org/badges/last-month/tidyweather?color=green)](https://cran.r-project.org/package=tidyweather)
