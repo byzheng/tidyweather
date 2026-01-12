@@ -9,6 +9,9 @@ This function validates weather records for:
 - No extreme values (e.g., less than -100 or above 100 for temperature,
   less than 0 for radiation and rain)
 
+- Latitude and longitude columns exist and contain a single non-NA value
+  for all records
+
 ## Usage
 
 ``` r
@@ -27,7 +30,8 @@ check_weather(
 - data:
 
   A data.frame or tibble containing weather records with at minimum a
-  date column and key weather variables (mint, maxt, radn, rain).
+  date column, latitude, longitude, and key weather variables (mint,
+  maxt, radn, rain).
 
 - key_cols:
 

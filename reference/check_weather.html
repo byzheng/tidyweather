@@ -4,12 +4,14 @@ Continuous weather data (no gaps in dates)
 No missing values in key columns (mint, maxt, radn, rain)
 No extreme values (e.g., less than -100 or above 100 for temperature,
 less than 0 for radiation and rain)
+Latitude and longitude columns exist and contain a single non-NA value for all records
 
 "><meta property="og:description" content="This function validates weather records for:
 Continuous weather data (no gaps in dates)
 No missing values in key columns (mint, maxt, radn, rain)
 No extreme values (e.g., less than -100 or above 100 for temperature,
 less than 0 for radiation and rain)
+Latitude and longitude columns exist and contain a single non-NA value for all records
 
 "></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -49,6 +51,7 @@ less than 0 for radiation and rain)
 <li><p>No missing values in key columns (mint, maxt, radn, rain)</p></li>
 <li><p>No extreme values (e.g., less than -100 or above 100 for temperature,
 less than 0 for radiation and rain)</p></li>
+<li><p>Latitude and longitude columns exist and contain a single non-NA value for all records</p></li>
 </ul></div>
 
     <div class="section level2">
@@ -69,7 +72,7 @@ less than 0 for radiation and rain)</p></li>
 
 <dl><dt id="arg-data">data<a class="anchor" aria-label="anchor" href="#arg-data"></a></dt>
 <dd><p>A data.frame or tibble containing weather records with at minimum
-a date column and key weather variables (mint, maxt, radn, rain).</p></dd>
+a date column, latitude, longitude, and key weather variables (mint, maxt, radn, rain).</p></dd>
 
 
 <dt id="arg-key-cols">key_cols<a class="anchor" aria-label="anchor" href="#arg-key-cols"></a></dt>
