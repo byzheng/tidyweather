@@ -15,7 +15,7 @@ check_weather(
 }
 \arguments{
 \item{data}{A data.frame or tibble containing weather records with at minimum
-a date column and key weather variables (mint, maxt, radn, rain).}
+a date column, latitude, longitude, and key weather variables (mint, maxt, radn, rain).}
 
 \item{key_cols}{A character vector of column names to check for missing values
 and extreme values. Default is c("mint", "maxt", "radn", "rain").}
@@ -47,6 +47,7 @@ This function validates weather records for:
 \item No missing values in key columns (mint, maxt, radn, rain)
 \item No extreme values (e.g., less than -100 or above 100 for temperature,
 less than 0 for radiation and rain)
+\item Latitude and longitude columns exist and contain a single non-NA value for all records
 }
 }
 \examples{

@@ -5,9 +5,10 @@
 #' * No missing values in key columns (mint, maxt, radn, rain)
 #' * No extreme values (e.g., less than -100 or above 100 for temperature,
 #'   less than 0 for radiation and rain)
+#' * Latitude and longitude columns exist and contain a single non-NA value for all records
 #' 
 #' @param data A data.frame or tibble containing weather records with at minimum
-#'   a date column and key weather variables (mint, maxt, radn, rain).
+#'   a date column, latitude, longitude, and key weather variables (mint, maxt, radn, rain).
 #' @param key_cols A character vector of column names to check for missing values
 #'   and extreme values. Default is c("mint", "maxt", "radn", "rain").
 #' @param temp_range A numeric vector of length 2 specifying the acceptable range
@@ -58,6 +59,27 @@ check_weather <- function(data,
     missing_cols <- key_cols[!key_cols %in% names(data)]
     if (length(missing_cols) > 0) {
         stop(paste("Missing required columns:", paste(missing_cols, collapse = ", ")))
+    }
+    
+    # Check that latitude and longitude columns exist and contain single non-NA values
+    if (!"latitude" %in% names(data)) {
+        stop("Data must contain a 'latitude' column")
+    }
+    if (all(is.na(data$latitude))) {
+        stop("Latitude column contains only NA values")
+    }
+    if (length(unique(data$latitude)) != 1) {
+        stop("Latitude column should contain a single value for all records")
+    }
+    
+    if (!"longitude" %in% names(data)) {
+        stop("Data must contain a 'longitude' column")
+    }
+    if (all(is.na(data$longitude))) {
+        stop("Longitude column contains only NA values")
+    }
+    if (length(unique(data$longitude)) != 1) {
+        stop("Longitude column should contain a single value for all records")
     }
     
     issues <- list()
