@@ -1,5 +1,9 @@
 # tidyweather
 
+[![](http://cranlogs.r-pkg.org/badges/grand-total/tidyweather?color=green)](https://cran.r-project.org/package=tidyweather)
+[![](http://cranlogs.r-pkg.org/badges/last-month/tidyweather?color=green)](https://cran.r-project.org/package=tidyweather)
+[![](http://cranlogs.r-pkg.org/badges/last-week/tidyweather?color=green)](https://cran.r-project.org/package=tidyweather)
+
 A tidyverse-style R package for agricultural weather analysis.
 Effortlessly summarize, and analyze weather data to support crop
 modeling, and climate-based decision-making in agriculture.
