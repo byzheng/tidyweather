@@ -1,6 +1,6 @@
 Package: tidyweather
 Title: Analysis the Weather Data for Agriculture
-Version: 0.0.1
+Version: 0.1.0
 Authors@R: 
     person("Bangou", "Zheng", , "bangyou.zheng@csiro.au", role = c("aut", "cre"))
 Description: Functions are collected to analyse weather data for agriculture 
