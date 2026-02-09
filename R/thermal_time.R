@@ -34,6 +34,10 @@ thermal_time <- function(mint, maxt, x_temp, y_temp,
     if (!is.null(method) && !method %in% c("3hr")) {
         stop("Method should be either NULL or '3hr'.")
     }
+    stopifnot(sum(is.na(mint)) == 0, sum(is.na(maxt)) == 0)
+    stopifnot(sum(is.na(x_temp)) == 0, sum(is.na(y_temp)) == 0)
+    stopifnot(all(mint <= maxt))
+
     if (is.null(method)) {
         meant <- (maxt + mint) / 2
         tt <- interpolation_function(x = x_temp, y = y_temp, values = meant)
@@ -70,6 +74,8 @@ thermal_time <- function(mint, maxt, x_temp, y_temp,
 #' @export
 interpolate_3hr <- function(mint, maxt) {
     stopifnot(is.numeric(mint), is.numeric(maxt), length(mint) == length(maxt))
+    stopifnot(sum(is.na(mint)) == 0, sum(is.na(maxt)) == 0)
+    stopifnot(all(mint <= maxt))
     hour <- seq(1, 8)
     frac <- 0.92105 + 0.1140 * hour - 0.0703 * 
         hour * hour + 0.0053 * hour * hour * hour
