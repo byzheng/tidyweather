@@ -7,7 +7,7 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/byzheng/tidyweather/blob/main/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/byzheng/tidyweather/blob/0.1.0/DESCRIPTION)
 
 Zheng B (2026). *tidyweather: Analysis the Weather Data for
 Agriculture*. R package version 0.1.0,
