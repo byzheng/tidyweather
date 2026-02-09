@@ -23,3 +23,65 @@ test_that("Thermal time", {
     
     options(old)
 })
+
+test_that("interpolate_3hr returns correct matrix dimensions", {
+    mint <- c(0, 10, 5)
+    maxt <- c(30, 40, 35)
+    result <- interpolate_3hr(mint, maxt)
+    
+    # Check that result is a matrix
+    expect_type(result, "double")
+    expect_true("matrix" %in% class(result))
+    expect_equal(dim(result), c(3, 8))  # 3 rows for 3 days, 8 columns for 3-hourly intervals
+    # Check dimensions: 3 rows (for 3 days) and 8 columns (for 8 3-hourly intervals)
+    expect_equal(dim(result), c(3, 8))
+})
+
+test_that("interpolate_3hr requires numeric vectors", {
+    # Non-numeric mint
+    expect_error(interpolate_3hr(c("0", "10"), c(30, 40)))
+    # Non-numeric maxt
+    expect_error(interpolate_3hr(c(0, 10), c("30", "40")))
+})
+
+test_that("interpolate_3hr requires equal length vectors", {
+    mint <- c(0, 10)
+    maxt <- c(30, 40, 50)  # Different length
+    expect_error(interpolate_3hr(mint, maxt))
+})
+
+test_that("interpolate_3hr values are bounded by mint and maxt", {
+    mint <- c(5, 10, 15)
+    maxt <- c(25, 30, 35)
+    result <- interpolate_3hr(mint, maxt)
+    
+    # Check each row: all values should be >= mint and <= maxt
+    for (i in 1:nrow(result)) {
+        expect_true(all(result[i, ] >= mint[i]))
+        expect_true(all(result[i, ] <= maxt[i]))
+    }
+})
+
+test_that("interpolate_3hr with single day", {
+    mint <- 10
+    maxt <- 30
+    result <- interpolate_3hr(mint, maxt)
+    
+    expect_equal(dim(result), c(1, 8))
+    # Values should be between mint and maxt
+    expect_true(all(result >= mint))
+    expect_true(all(result <= maxt))
+})
+
+test_that("interpolate_3hr produces expected values", {
+    mint <- c(0, 10)
+    maxt <- c(30, 40)
+    result <- interpolate_3hr(mint, maxt)
+    
+    # From the function documentation example
+    # Expected result based on the sine curve formula
+    # First row should have values between 0 and 30
+    # Second row should have values between 10 and 40
+    expect_equal(round(result[1, 1], 3), round(0 + (30 - 0) * (0.92105 + 0.1140*1 - 0.0703*1*1 + 0.0053*1*1*1), 3))
+    expect_equal(round(result[2, 1], 3), round(10 + (40 - 10) * (0.92105 + 0.1140*1 - 0.0703*1*1 + 0.0053*1*1*1), 3))
+})

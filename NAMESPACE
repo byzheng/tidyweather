@@ -3,6 +3,7 @@
 export(check_weather)
 export(day_length)
 export(get_weather_option)
+export(interpolate_3hr)
 export(interpolation_function)
 export(last_frost_day)
 export(number_frost_day)

@@ -43,14 +43,7 @@ thermal_time <- function(mint, maxt, x_temp, y_temp,
         if (sum(pos) > 0) {
             stop("Minimum temperature is more than maximum temperature.")
         }
-        # Calculate the 3hour temperature
-        hour <- seq(1, 8)
-        frac <- 0.92105 + 0.1140 * hour - 0.0703 * 
-            hour * hour + 0.0053 * hour * hour * hour
-        mint2 <- matrix(rep(mint, times = 8), ncol = 8)
-        maxt2 <- matrix(rep(maxt, times = 8), ncol = 8)
-        frac2 <- matrix(rep(frac, each = length(mint)), ncol = 8)
-        temp <- mint2 + (maxt2 - mint2) * frac2
+        temp <- interpolate_3hr(mint = mint, maxt = maxt)
         tt <- matrix(interpolation_function(x = x_temp, y = y_temp, values = temp), ncol = 8)
         res <- apply(tt, 1, mean)
         return(res)
@@ -59,3 +52,30 @@ thermal_time <- function(mint, maxt, x_temp, y_temp,
     }
 }
 
+#' Interpolate 3-Hourly Temperature Values using sine curve.
+#'
+#' Interpolates temperature values at 3-hourly intervals from daily minimum
+#' and maximum temperatures using a sine curve.
+#'
+#' @param mint A numeric vector of daily minimum temperatures.
+#' @param maxt A numeric vector of daily maximum temperatures.
+#'
+#' @return A numeric matrix of interpolated 3-hourly temperature values. Rows correspond to input minimum and maximum temperatures and columns correspond to the eight interpolated 3-hourly intervals.
+#'
+#' @examples
+#' mint <- c(0, 10)
+#' maxt <- c(30, 40)
+#' interpolate_3hr(mint = mint, maxt = maxt)
+#'
+#' @export
+interpolate_3hr <- function(mint, maxt) {
+    stopifnot(is.numeric(mint), is.numeric(maxt), length(mint) == length(maxt))
+    hour <- seq(1, 8)
+    frac <- 0.92105 + 0.1140 * hour - 0.0703 * 
+        hour * hour + 0.0053 * hour * hour * hour
+    mint2 <- matrix(rep(mint, times = 8), ncol = 8)
+    maxt2 <- matrix(rep(maxt, times = 8), ncol = 8)
+    frac2 <- matrix(rep(frac, each = length(mint)), ncol = 8)
+    temp <- mint2 + (maxt2 - mint2) * frac2
+    return(temp)
+}
