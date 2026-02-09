@@ -8,9 +8,9 @@ daily minimum temperatures using tidyverse principles.
 ``` r
 last_frost_day(
   .data,
-  threshold = get_weather_option("extreme.frost_threshold"),
+  threshold = weather_options$get("extreme.frost_threshold"),
   hemisphere = "south",
-  require_full_year = get_weather_option("require_full_year")
+  require_full_year = weather_options$get("require_full_year")
 )
 ```
 

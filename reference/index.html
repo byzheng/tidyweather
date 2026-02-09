@@ -16,6 +16,7 @@
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
+<li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
 <li class="nav-item"><a class="external-link nav-link" href="https://github.com/byzheng/tidyweather/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
@@ -49,10 +50,24 @@
 
         <dt>
 
-          <code><a href="get_weather_option.html">get_weather_option()</a></code>
+          <code><a href="day_length.html">day_length()</a></code>
 
         </dt>
-        <dd>Get weather package option</dd>
+        <dd>The time elapsed in hours between the specified sun angle from 90 degree in am and pm. +ve above the horizon, -ve below the horizon.</dd>
+
+        <dt>
+
+          <code><a href="interpolate_3hr.html">interpolate_3hr()</a></code>
+
+        </dt>
+        <dd>Interpolate 3-Hourly Temperature Values using sine curve.</dd>
+
+        <dt>
+
+          <code><a href="interpolation_function.html">interpolation_function()</a></code>
+
+        </dt>
+        <dd>Return a y value from a linear interpolation function</dd>
 
         <dt>
 
@@ -84,17 +99,24 @@
 
         <dt>
 
-          <code><a href="weather_options.html">weather_options()</a></code>
+          <code><a href="thermal_time.html">thermal_time()</a></code>
 
         </dt>
-        <dd>Set or get options for tidyweather</dd>
+        <dd>Calculate thermal time using cardinal temperatures</dd>
 
         <dt>
 
-          <code><a href="weather_reset.html">weather_reset()</a></code>
+          <code><a href="ttest_ts.html">ttest_ts()</a></code>
 
         </dt>
-        <dd>Reset all tidyweather options to defaults</dd>
+        <dd>Significantly t-test with auto-correlation for time serial data</dd>
+
+        <dt>
+
+          <code><a href="weather_options.html">weather_options</a></code>
+
+        </dt>
+        <dd>tidyweather options</dd>
 
         <dt>
 

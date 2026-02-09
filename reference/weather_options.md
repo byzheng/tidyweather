@@ -1,54 +1,54 @@
-# Set or get options for tidyweather
+# tidyweather options
 
-This function allows users to get or set configuration options for the
-tidyweather package.
+An options manager for configuring tidyweather parameters. This object
+provides methods to get and set weather-related parameters.
 
 ## Usage
 
 ``` r
-weather_options(...)
+weather_options
 ```
 
-## Arguments
+## Format
 
-- ...:
+An object of class `list` of length 3.
 
-  Option names to retrieve or key-value pairs to set.
+## Available Options
 
-## Value
+- extreme.frost_threshold:
 
-If called with no arguments, returns all current options. If called with
-named arguments, updates and returns the modified options.
+  Frost threshold for extreme weather events. Default: 0
 
-## Details
+- require_full_year:
 
-The options are managed via a nested structure that distinguishes
-between the tidyweather package.
+  Whether to require a full year of data for certain calculations.
+  Default: TRUE
 
-## Supported options
+## Methods
 
-- `extreme.frost_threshold`:
+- get(key):
 
-  Frost threshold for extreme weather events.
+  Retrieve the value of an option by its key (e.g.,
+  "extreme.frost_threshold")
 
-- `require_full_year`:
+- set(key, value):
 
-  Whether to require a full year of data for calculations.
+  Set the value of an option by its key
+
+- reset():
+
+  Reset all options to their default values
 
 ## Examples
 
 ``` r
-# Get all options
-weather_options()
-#> $extreme
-#> $extreme$frost_threshold
+# Get default frost threshold
+weather_options$get("extreme.frost_threshold")
 #> [1] 0
-#> 
-#> 
-#> $require_full_year
-#> [1] FALSE
-#> 
 
-# Set frost_threshold
-weather_options(extreme.frost_threshold = 2)
+# Set custom values
+weather_options$set("extreme.frost_threshold" = -2)
+
+# Reset to defaults
+weather_options$reset()
 ```

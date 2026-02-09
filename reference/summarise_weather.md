@@ -34,12 +34,10 @@ A tibble with one row per group, containing the following columns:
 ## Details
 
 The function retrieves thresholds and settings from the global
-tidyweather options via
-[`weather_options()`](https://byzheng.github.io/tidyweather/reference/weather_options.md).
-The default frost threshold is
-`get_weather_option("extreme.frost_threshold")` and `require_full_year`
-is `get_weather_option("require_full_year")`. These can be changed using
-[`weather_options()`](https://byzheng.github.io/tidyweather/reference/weather_options.md).
+tidyweather options via `weather_options$get()`. The default frost
+threshold is `weather_options$get("extreme.frost_threshold")` and
+`require_full_year` is `weather_options$get("require_full_year")`. These
+can be changed using `weather_options$set()`.
 
 This function is designed to work with grouped tibbles (e.g., after
 [`dplyr::group_by()`](https://dplyr.tidyverse.org/reference/group_by.html)),
@@ -62,7 +60,7 @@ library(dplyr)
 weather_data <- read_weather(system.file("extdata/ppd_72150.met", package = "tidyweather"))
 
 # Summarise without grouping
-weather_options(require_full_year = FALSE)
+weather_options$set("require_full_year" = FALSE)
 summarise_weather(weather_data)
 #> # A tibble: 1 × 2
 #>   number_frost_days last_frost_day

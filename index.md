@@ -25,21 +25,20 @@ settings like frost thresholds and other extreme weather parameters.
 
 ### Setting Options
 
-Use
-[`weather_options()`](https://byzheng.github.io/tidyweather/reference/weather_options.md)
-to view or modify package settings:
+Use `weather_options$get()` to view or and `weather_options$set()` to
+modify package settings:
 
 ``` r
 library(tidyweather)
 
 # View all current options
-weather_options()
+weather_options$get()
 
 # Set frost threshold to 2°C
-weather_options(extreme.frost_threshold = 2)
+weather_options$set("extreme.frost_threshold" = 2)
 
 # View updated options
-weather_options()
+weather_options$get()
 ```
 
 ### Available Options
@@ -54,7 +53,7 @@ weather_options()
 To restore all options to their defaults:
 
 ``` r
-weather_reset()
+weather_options$reset()
 ```
 
 ## Data Sources
