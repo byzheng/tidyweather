@@ -9,6 +9,8 @@
   degree in am and pm. +ve above the horizon, -ve below the horizon.
 - [`get_weather_option()`](https://byzheng.github.io/tidyweather/reference/get_weather_option.md)
   : Get weather package option
+- [`interpolate_3hr()`](https://byzheng.github.io/tidyweather/reference/interpolate_3hr.md)
+  : Interpolate 3-Hourly Temperature Values using sine curve.
 - [`interpolation_function()`](https://byzheng.github.io/tidyweather/reference/interpolation_function.md)
   : Return a y value from a linear interpolation function
 - [`last_frost_day()`](https://byzheng.github.io/tidyweather/reference/last_frost_day.md)
