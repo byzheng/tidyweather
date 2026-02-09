@@ -186,6 +186,6 @@ test_that("cleanup after options tests", {
 
 # Clean up after all tests
 test_that("get_weather_option", {
-    weather_options$reset()
+    expect_silent(weather_options$reset())
 })
 
