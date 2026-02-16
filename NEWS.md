@@ -5,3 +5,4 @@
 # tidyweather 0.2.0
 
 * Add new functions related with thermal time
+* Use optree to manage package options
