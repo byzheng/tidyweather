@@ -9,3 +9,4 @@ CRAN release: 2026-01-17
 ## tidyweather 0.2.0
 
 - Add new functions related with thermal time
+- Use optree to manage package options
