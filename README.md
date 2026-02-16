@@ -12,11 +12,19 @@ A tidyverse-style R package for agricultural weather analysis. Effortlessly summ
 
 ## Installation
 
-Currently on [Github](https://github.com/byzheng/tidyweather) only. Install with:
+
+### From CRAN
+
+```r
+install.packages('tidyweather')
+```
+
+### From GitHub (development version)
 
 ```r
 remotes::install_github('byzheng/tidyweather')
 ```
+
 
 ## Configuration
 
