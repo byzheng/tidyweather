@@ -7,13 +7,13 @@
 spherical_distance(lat1, lon1, lat2, lon2)
 }
 \arguments{
-\item{lat1}{Latitude of the first point in degrees}
+\item{lat1}{Latitude of the first point in degrees. Numeric scalar (-90 to 90)}
 
-\item{lon1}{Longitude of the first point in degrees}
+\item{lon1}{Longitude of the first point in degrees. Numeric scalar (-180 to 180)}
 
-\item{lat2}{Latitude of the second point in degrees}
+\item{lat2}{Latitudes of the second point in degrees. Numeric vector (-90 to 90)}
 
-\item{lon2}{Longitude of the second point in degrees}
+\item{lon2}{Longitudes of the second point in degrees. Numeric vector (-180 to 180)}
 }
 \value{
 Distance in km
