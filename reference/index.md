@@ -17,6 +17,8 @@
   : Calculate the number of frost days
 - [`read_weather()`](https://byzheng.github.io/tidyweather/reference/read_weather.md)
   : Read weather records from a file list and/or a folder list
+- [`spherical_distance()`](https://byzheng.github.io/tidyweather/reference/spherical_distance.md)
+  : Calculate the sphere distance between two points on the Earth
 - [`summarise_weather()`](https://byzheng.github.io/tidyweather/reference/summarise_weather.md)
   : Summarise Weather Extremes and Key Indicators
 - [`thermal_time()`](https://byzheng.github.io/tidyweather/reference/thermal_time.md)

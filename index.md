@@ -13,12 +13,14 @@ modeling, and climate-based decision-making in agriculture.
 ### From CRAN
 
 ``` r
+
 install.packages('tidyweather')
 ```
 
 ### From GitHub (development version)
 
 ``` r
+
 remotes::install_github('byzheng/tidyweather')
 ```
 
@@ -34,6 +36,7 @@ Use `weather_options$get()` to view or and `weather_options$set()` to
 modify package settings:
 
 ``` r
+
 library(tidyweather)
 
 # View all current options
@@ -58,6 +61,7 @@ weather_options$get()
 To restore all options to their defaults:
 
 ``` r
+
 weather_options$reset()
 ```
 

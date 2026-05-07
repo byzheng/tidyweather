@@ -9,10 +9,6 @@ provides methods to get and set weather-related parameters.
 weather_options
 ```
 
-## Format
-
-An object of class `list` of length 3.
-
 ## Available Options
 
 - extreme.frost_threshold:
