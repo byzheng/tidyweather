@@ -12,19 +12,20 @@ spherical_distance(lat1, lon1, lat2, lon2)
 
 - lat1:
 
-  Latitude of the first point in degrees
+  Latitude of the first point in degrees. Numeric scalar (-90 to 90)
 
 - lon1:
 
-  Longitude of the first point in degrees
+  Longitude of the first point in degrees. Numeric scalar (-180 to 180)
 
 - lat2:
 
-  Latitude of the second point in degrees
+  Latitudes of the second point in degrees. Numeric vector (-90 to 90)
 
 - lon2:
 
-  Longitude of the second point in degrees
+  Longitudes of the second point in degrees. Numeric vector (-180 to
+  180)
 
 ## Value
 
