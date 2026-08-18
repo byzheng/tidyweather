@@ -87,6 +87,9 @@ and Innovation.
   degree in am and pm. +ve above the horizon, -ve below the horizon.
 - [`interpolate_3hr()`](https://byzheng.github.io/tidyweather/reference/interpolate_3hr.md)
   : Interpolate 3-Hourly Temperature Values using sine curve.
+- [`interpolate_hourly_sin_pp_adjusted()`](https://byzheng.github.io/tidyweather/reference/interpolate_hourly_sin_pp_adjusted.md)
+  : Interpolate Hourly Temperature Values using APSIM
+  HourlySinPpAdjusted.
 - [`interpolation_function()`](https://byzheng.github.io/tidyweather/reference/interpolation_function.md)
   : Return a y value from a linear interpolation function
 - [`last_frost_day()`](https://byzheng.github.io/tidyweather/reference/last_frost_day.md)

@@ -30,7 +30,8 @@ thermal_time(mint, maxt, x_temp, y_temp, method = NULL)
 
   The method to calculate thermal time. The default method is ( maxt +
   mint ) / 2 - base. The three hour temperature methods will be usesd if
-  method = '3hr'
+  method = '3hr'. The APSIM HourlySinPpAdjusted method can be selected
+  with method = 'HourlySinPpAdjusted'.
 
 ## Value
 
@@ -47,4 +48,6 @@ thermal_time(mint, maxt, x_temp, y_temp)
 #> [1] 15.00000 13.33333
 thermal_time(mint, maxt, x_temp, y_temp, method = '3hr')
 #> [1] 9.279687 8.790563
+thermal_time(mint, maxt, x_temp, y_temp, method = 'HourlySinPpAdjusted')
+#> [1] 15.10684 15.83394
 ```
