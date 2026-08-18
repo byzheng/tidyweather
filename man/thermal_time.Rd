@@ -17,7 +17,9 @@ thermal_time(mint, maxt, x_temp, y_temp, method = NULL)
 
 \item{method}{The method to calculate thermal time.
 The default method is ( maxt + mint ) / 2 - base.
-The three hour temperature methods will be usesd if method = '3hr'}
+The three hour temperature methods will be usesd if method = '3hr'.
+The APSIM HourlySinPpAdjusted method can be selected with
+method = 'HourlySinPpAdjusted'.}
 }
 \value{
 The thermal time.
@@ -32,4 +34,5 @@ x_temp <- c(0, 20, 35)
 y_temp <- c(0, 20, 0)
 thermal_time(mint, maxt, x_temp, y_temp)
 thermal_time(mint, maxt, x_temp, y_temp, method = '3hr')
+thermal_time(mint, maxt, x_temp, y_temp, method = 'HourlySinPpAdjusted')
 }

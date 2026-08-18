@@ -6,7 +6,9 @@
 #' @param y_temp The effective thermal time
 #' @param method The method to calculate thermal time. 
 #' The default method is ( maxt + mint ) / 2 - base. 
-#' The three hour temperature methods will be usesd if method = '3hr'
+#' The three hour temperature methods will be usesd if method = '3hr'.
+#' The APSIM HourlySinPpAdjusted method can be selected with
+#' method = 'HourlySinPpAdjusted'.
 #' @return The thermal time.
 #' @export
 #' @examples 
@@ -16,6 +18,7 @@
 #' y_temp <- c(0, 20, 0)
 #' thermal_time(mint, maxt, x_temp, y_temp)
 #' thermal_time(mint, maxt, x_temp, y_temp, method = '3hr')
+#' thermal_time(mint, maxt, x_temp, y_temp, method = 'HourlySinPpAdjusted')
 thermal_time <- function(mint, maxt, x_temp, y_temp,
                          method = NULL)
 {
@@ -31,8 +34,8 @@ thermal_time <- function(mint, maxt, x_temp, y_temp,
     if (length(x_temp) != length(y_temp)) {
         stop("x_temp and y_temp require the same length.")
     }
-    if (!is.null(method) && !method %in% c("3hr")) {
-        stop("Method should be either NULL or '3hr'.")
+    if (!is.null(method) && !method %in% c("3hr", "HourlySinPpAdjusted")) {
+        stop("Method should be either NULL, '3hr' or 'HourlySinPpAdjusted'.")
     }
     stopifnot(sum(is.na(mint)) == 0, sum(is.na(maxt)) == 0)
     stopifnot(sum(is.na(x_temp)) == 0, sum(is.na(y_temp)) == 0)
@@ -51,9 +54,116 @@ thermal_time <- function(mint, maxt, x_temp, y_temp,
         tt <- matrix(interpolation_function(x = x_temp, y = y_temp, values = temp), ncol = 8)
         res <- apply(tt, 1, mean)
         return(res)
+    } else if (method == "HourlySinPpAdjusted") {
+        temp <- interpolate_hourly_sin_pp_adjusted(mint = mint, maxt = maxt)
+        return(interpolation_function(x = x_temp, y = y_temp, values = temp))
     } else {
         stop("Not implemented for method ", method)
     }
+}
+
+
+#' Interpolate Hourly Temperature Values using APSIM HourlySinPpAdjusted.
+#'
+#' Interpolates hourly temperatures from daily minimum and maximum temperatures
+#' using the APSIM HourlySinPpAdjusted method. Daytime temperatures are
+#' sinusoidal and nighttime temperatures follow an exponential cooling curve.
+#'
+#' @param mint A numeric vector of daily minimum temperatures.
+#' @param maxt A numeric vector of daily maximum temperatures.
+#' @param daylength Day length in hours. Either a scalar or a numeric vector with
+#'   the same length as \code{mint}. Defaults to 12.
+#' @param sunrise Sunrise hour. Either a scalar or a numeric vector with the same
+#'   length as \code{mint}. Defaults to \code{12 - daylength / 2}.
+#' @param sunset Sunset hour. Either a scalar or a numeric vector with the same
+#'   length as \code{mint}. Defaults to \code{sunrise + daylength}.
+#'
+#' @return A numeric vector of daily mean temperatures, with one value per
+#'   input day.
+#'
+#' @examples
+#' mint <- c(10, 11, 12)
+#' maxt <- c(30, 31, 32)
+#' interpolate_hourly_sin_pp_adjusted(mint, maxt)
+#'
+#' @export
+interpolate_hourly_sin_pp_adjusted <- function(
+    mint,
+    maxt,
+    daylength = 12,
+    sunrise = NULL,
+    sunset = NULL
+) {
+    stopifnot(is.numeric(mint), is.numeric(maxt), length(mint) == length(maxt))
+    stopifnot(sum(is.na(mint)) == 0, sum(is.na(maxt)) == 0)
+    stopifnot(all(mint <= maxt))
+
+    nday <- length(mint)
+    if (length(daylength) == 1) {
+        daylength <- rep(daylength, nday)
+    }
+    stopifnot(is.numeric(daylength), length(daylength) == nday)
+    stopifnot(sum(is.na(daylength)) == 0)
+    stopifnot(all(daylength > 0), all(daylength < 24))
+
+    if (is.null(sunrise)) {
+        sunrise <- 12 - daylength / 2
+    } else if (length(sunrise) == 1) {
+        sunrise <- rep(sunrise, nday)
+    }
+    stopifnot(is.numeric(sunrise), length(sunrise) == nday)
+    stopifnot(sum(is.na(sunrise)) == 0)
+
+    if (is.null(sunset)) {
+        sunset <- sunrise + daylength
+    } else if (length(sunset) == 1) {
+        sunset <- rep(sunset, nday)
+    }
+    stopifnot(is.numeric(sunset), length(sunset) == nday)
+    stopifnot(sum(is.na(sunset)) == 0)
+
+    p <- 1.5
+    tc <- 4.0
+    hours <- 0:23
+    out <- matrix(NA_real_, nrow = nday, ncol = 24)
+
+    for (i in seq_len(nday)) {
+        tmin <- mint[i]
+        tmax <- maxt[i]
+        tmax_b <- if (i == 1) tmax else maxt[i - 1]
+        tmin_a <- if (i == nday) tmin else mint[i + 1]
+        d <- daylength[i]
+        hsrise <- sunrise[i]
+        hsset <- sunset[i]
+
+        for (h_i in seq_along(hours)) {
+            th <- hours[h_i]
+
+            if (th < hsrise) {
+                n <- 24 - d
+                tsset <- tmin + (tmax_b - tmin) * sin(pi * (d / (d + 2 * p)))
+                ta <- (tmin - tsset * exp(-n / tc) +
+                    (tsset - tmin) * exp(-(th + 24 - hsset) / tc)) /
+                    (1 - exp(-n / tc))
+            } else if (th >= hsrise && th < 12 + p) {
+                ta <- tmin + (tmax - tmin) *
+                    sin(pi * (th - hsrise) / (d + 2 * p))
+            } else if (th >= 12 + p && th < hsset) {
+                ta <- tmin_a + (tmax - tmin_a) *
+                    sin(pi * (th - hsrise) / (d + 2 * p))
+            } else {
+                tsset <- tmin_a + (tmax - tmin_a) * sin(pi * (d / (d + 2 * p)))
+                n <- 24 - d
+                ta <- (tmin_a - tsset * exp(-n / tc) +
+                    (tsset - tmin_a) * exp(-(th - hsset) / tc)) /
+                    (1 - exp(-n / tc))
+            }
+
+            out[i, h_i] <- ta
+        }
+    }
+
+    return(rowMeans(out))
 }
 
 #' Interpolate 3-Hourly Temperature Values using sine curve.

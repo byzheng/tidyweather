@@ -20,8 +20,54 @@ test_that("Thermal time", {
     expect_equal(round(res[1], 1), 21.6, tolerance=1e-3)
     res <- thermal_time(records$mint, records$maxt, x_temp, y_temp, method = "3hr")
     expect_equal(round(res[1], 1), 19.6, tolerance=1e-3)
+
+    res <- thermal_time(
+        records$mint,
+        records$maxt,
+        x_temp,
+        y_temp,
+        method = "HourlySinPpAdjusted"
+    )
+    expect_equal(length(res), length(records$mint))
+    expect_true(all(is.finite(res)))
     
     options(old)
+})
+
+test_that("thermal_time HourlySinPpAdjusted matches mean hourly response", {
+    mint <- c(10, 11, 12)
+    maxt <- c(30, 31, 32)
+    x_temp <- c(-50, 60)
+    y_temp <- c(-50, 60)
+
+    expected <- interpolate_hourly_sin_pp_adjusted(mint, maxt)
+    result <- thermal_time(
+        mint,
+        maxt,
+        x_temp,
+        y_temp,
+        method = "HourlySinPpAdjusted"
+    )
+
+    expect_equal(result, expected, tolerance = 1e-8)
+})
+
+test_that("interpolate_hourly_sin_pp_adjusted returns daily means", {
+    mint <- c(0, 10, 5)
+    maxt <- c(30, 40, 35)
+    result <- interpolate_hourly_sin_pp_adjusted(mint, maxt)
+
+    expect_type(result, "double")
+    expect_equal(length(result), 3)
+})
+
+test_that("interpolate_hourly_sin_pp_adjusted handles APSIM boundaries", {
+    mint <- c(10, 10, 10)
+    maxt <- c(30, 30, 30)
+    result <- interpolate_hourly_sin_pp_adjusted(mint, maxt)
+
+    expect_equal(result[1], result[2], tolerance = 1e-8)
+    expect_equal(result[2], result[3], tolerance = 1e-8)
 })
 
 test_that("thermal_time rejects NA values", {
