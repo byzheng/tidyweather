@@ -5,15 +5,7 @@ Calculate thermal time using cardinal temperatures
 ## Usage
 
 ``` r
-thermal_time(
-  mint,
-  maxt,
-  x_temp,
-  y_temp,
-  method = NULL,
-  lat = NULL,
-  date = NULL
-)
+thermal_time(mint, maxt, x_temp, y_temp, method = NULL, ...)
 ```
 
 ## Arguments
@@ -41,15 +33,10 @@ thermal_time(
   method = '3hr'. The APSIM HourlySinPpAdjusted method can be selected
   with method = 'HourlySinPpAdjusted'.
 
-- lat:
+- ...:
 
-  Latitude of the site (deg), required when method =
-  'HourlySinPpAdjusted'. A single numeric value.
-
-- date:
-
-  A `Date` vector with the same length as `mint`, required when method =
-  'HourlySinPpAdjusted'.
+  Additional arguments passed to the method-specific functions. Required
+  arguments for method = 'HourlySinPpAdjusted' are, lat and date.
 
 ## Value
 
