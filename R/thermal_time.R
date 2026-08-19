@@ -9,10 +9,8 @@
 #' The three hour temperature methods will be usesd if method = '3hr'.
 #' The APSIM HourlySinPpAdjusted method can be selected with
 #' method = 'HourlySinPpAdjusted'.
-#' @param lat Latitude of the site (deg), required when
-#' method = 'HourlySinPpAdjusted'. A single numeric value.
-#' @param date A \code{Date} vector with the same length as \code{mint},
-#' required when method = 'HourlySinPpAdjusted'.
+#' @param ... Additional arguments passed to the method-specific functions.
+#'   Required arguments for method = 'HourlySinPpAdjusted' are, lat and date.
 #' @return The thermal time.
 #' @export
 #' @examples 
@@ -26,7 +24,7 @@
 #' thermal_time(mint, maxt, x_temp, y_temp, method = 'HourlySinPpAdjusted',
 #'              lat = -27.5, date = date)
 thermal_time <- function(mint, maxt, x_temp, y_temp,
-                         method = NULL, lat = NULL, date = NULL)
+                         method = NULL, ...)
 {
     if (!is.numeric(maxt) | !is.numeric(mint)) {
         stop("Numeric vector is required for mint and maxt.")
@@ -61,11 +59,12 @@ thermal_time <- function(mint, maxt, x_temp, y_temp,
         res <- apply(tt, 1, mean)
         return(res)
     } else if (method == "HourlySinPpAdjusted") {
-        if (is.null(lat) || is.null(date)) {
+        args <- list(...)
+        if (is.null(args$lat) || is.null(args$date)) {
             stop("lat and date are required when method = 'HourlySinPpAdjusted'.")
         }
         temp <- interpolate_hourly_sin_pp_adjusted(mint = mint, maxt = maxt,
-                                                    lat = lat, date = date)
+                                                    lat = args$lat, date = args$date)
         return(interpolation_function(x = x_temp, y = y_temp, values = temp))
     } else {
         stop("Not implemented for method ", method)

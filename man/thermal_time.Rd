@@ -4,15 +4,7 @@
 \alias{thermal_time}
 \title{Calculate thermal time using cardinal temperatures}
 \usage{
-thermal_time(
-  mint,
-  maxt,
-  x_temp,
-  y_temp,
-  method = NULL,
-  lat = NULL,
-  date = NULL
-)
+thermal_time(mint, maxt, x_temp, y_temp, method = NULL, ...)
 }
 \arguments{
 \item{mint}{The minimum temperature}
@@ -29,11 +21,8 @@ The three hour temperature methods will be usesd if method = '3hr'.
 The APSIM HourlySinPpAdjusted method can be selected with
 method = 'HourlySinPpAdjusted'.}
 
-\item{lat}{Latitude of the site (deg), required when
-method = 'HourlySinPpAdjusted'. A single numeric value.}
-
-\item{date}{A \code{Date} vector with the same length as \code{mint},
-required when method = 'HourlySinPpAdjusted'.}
+\item{...}{Additional arguments passed to the method-specific functions.
+Required arguments for method = 'HourlySinPpAdjusted' are, lat and date.}
 }
 \value{
 The thermal time.
