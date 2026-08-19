@@ -5,7 +5,15 @@ Calculate thermal time using cardinal temperatures
 ## Usage
 
 ``` r
-thermal_time(mint, maxt, x_temp, y_temp, method = NULL)
+thermal_time(
+  mint,
+  maxt,
+  x_temp,
+  y_temp,
+  method = NULL,
+  lat = NULL,
+  date = NULL
+)
 ```
 
 ## Arguments
@@ -33,6 +41,16 @@ thermal_time(mint, maxt, x_temp, y_temp, method = NULL)
   method = '3hr'. The APSIM HourlySinPpAdjusted method can be selected
   with method = 'HourlySinPpAdjusted'.
 
+- lat:
+
+  Latitude of the site (deg), required when method =
+  'HourlySinPpAdjusted'. A single numeric value.
+
+- date:
+
+  A `Date` vector with the same length as `mint`, required when method =
+  'HourlySinPpAdjusted'.
+
 ## Value
 
 The thermal time.
@@ -48,6 +66,8 @@ thermal_time(mint, maxt, x_temp, y_temp)
 #> [1] 15.00000 13.33333
 thermal_time(mint, maxt, x_temp, y_temp, method = '3hr')
 #> [1] 9.279687 8.790563
-thermal_time(mint, maxt, x_temp, y_temp, method = 'HourlySinPpAdjusted')
-#> [1] 15.10684 15.83394
+date <- as.Date(c("2020-01-01", "2020-01-02"))
+thermal_time(mint, maxt, x_temp, y_temp, method = 'HourlySinPpAdjusted',
+             lat = -27.5, date = date)
+#> [1] 16.66864 13.45011
 ```

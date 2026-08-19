@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">tidyweather</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -39,7 +39,15 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">thermal_time</span><span class="op">(</span><span class="va">mint</span>, <span class="va">maxt</span>, <span class="va">x_temp</span>, <span class="va">y_temp</span>, method <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">thermal_time</span><span class="op">(</span></span>
+<span>  <span class="va">mint</span>,</span>
+<span>  <span class="va">maxt</span>,</span>
+<span>  <span class="va">x_temp</span>,</span>
+<span>  <span class="va">y_temp</span>,</span>
+<span>  method <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  lat <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  date <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -69,6 +77,16 @@ The three hour temperature methods will be usesd if method = '3hr'.
 The APSIM HourlySinPpAdjusted method can be selected with
 method = 'HourlySinPpAdjusted'.</p></dd>
 
+
+<dt id="arg-lat">lat<a class="anchor" aria-label="anchor" href="#arg-lat"></a></dt>
+<dd><p>Latitude of the site (deg), required when
+method = 'HourlySinPpAdjusted'. A single numeric value.</p></dd>
+
+
+<dt id="arg-date">date<a class="anchor" aria-label="anchor" href="#arg-date"></a></dt>
+<dd><p>A <code>Date</code> vector with the same length as <code>mint</code>,
+required when method = 'HourlySinPpAdjusted'.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -85,8 +103,10 @@ method = 'HourlySinPpAdjusted'.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 15.00000 13.33333</span>
 <span class="r-in"><span><span class="fu">thermal_time</span><span class="op">(</span><span class="va">mint</span>, <span class="va">maxt</span>, <span class="va">x_temp</span>, <span class="va">y_temp</span>, method <span class="op">=</span> <span class="st">'3hr'</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 9.279687 8.790563</span>
-<span class="r-in"><span><span class="fu">thermal_time</span><span class="op">(</span><span class="va">mint</span>, <span class="va">maxt</span>, <span class="va">x_temp</span>, <span class="va">y_temp</span>, method <span class="op">=</span> <span class="st">'HourlySinPpAdjusted'</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 15.10684 15.83394</span>
+<span class="r-in"><span><span class="va">date</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"2020-01-01"</span>, <span class="st">"2020-01-02"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">thermal_time</span><span class="op">(</span><span class="va">mint</span>, <span class="va">maxt</span>, <span class="va">x_temp</span>, <span class="va">y_temp</span>, method <span class="op">=</span> <span class="st">'HourlySinPpAdjusted'</span>,</span></span>
+<span class="r-in"><span>             lat <span class="op">=</span> <span class="op">-</span><span class="fl">27.5</span>, date <span class="op">=</span> <span class="va">date</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 16.66864 13.45011</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
