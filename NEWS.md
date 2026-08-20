@@ -13,4 +13,9 @@
 
 # tidyweather 0.3.1
 
-* rename argument name in function day_length and thermal_time from lat to latitude
+* Rename argument name in function day_length and thermal_time from lat to latitude
+
+
+# tidyweather 0.3.2
+
+* Add a new example weather data
