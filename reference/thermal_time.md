@@ -36,7 +36,7 @@ thermal_time(mint, maxt, x_temp, y_temp, method = NULL, ...)
 - ...:
 
   Additional arguments passed to the method-specific functions. Required
-  arguments for method = 'HourlySinPpAdjusted' are, lat and date.
+  arguments for method = 'HourlySinPpAdjusted' are, latitude and date.
 
 ## Value
 
@@ -55,6 +55,6 @@ thermal_time(mint, maxt, x_temp, y_temp, method = '3hr')
 #> [1] 9.279687 8.790563
 date <- as.Date(c("2020-01-01", "2020-01-02"))
 thermal_time(mint, maxt, x_temp, y_temp, method = 'HourlySinPpAdjusted',
-             lat = -27.5, date = date)
+             latitude = -27.5, date = date)
 #> [1] 16.66864 13.45011
 ```

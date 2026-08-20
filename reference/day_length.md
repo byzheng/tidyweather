@@ -6,7 +6,7 @@ in am and pm. +ve above the horizon, -ve below the horizon.
 ## Usage
 
 ``` r
-day_length(doy, lat, angle = -6)
+day_length(doy, latitude = NULL, angle = -6)
 ```
 
 ## Arguments
@@ -15,7 +15,7 @@ day_length(doy, lat, angle = -6)
 
   day of year number
 
-- lat:
+- latitude:
 
   latitude of site (deg)
 
