@@ -10,3 +10,7 @@
 # tidyweather 0.3.0
 
 * Add new function (interpolate_hourly_sin_pp_adjusted) related with thermal time
+
+# tidyweather 0.3.1
+
+* rename argument name in function day_length and thermal_time from lat to latitude
