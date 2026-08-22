@@ -15,6 +15,8 @@ CRAN release: 2026-02-19
 
 ## tidyweather 0.3.0
 
+CRAN release: 2026-08-20
+
 - Add new function (interpolate_hourly_sin_pp_adjusted) related with
   thermal time
 
