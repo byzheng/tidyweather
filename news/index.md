@@ -27,4 +27,6 @@ CRAN release: 2026-08-20
 
 ## tidyweather 0.3.2
 
+CRAN release: 2026-09-24
+
 - Add a new example weather data
