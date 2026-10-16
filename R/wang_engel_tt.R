@@ -24,7 +24,7 @@
 #'     geom_vline(xintercept = c(0, 25, 35), linetype = "dashed", color = "red") +
 #'     geom_hline(yintercept = c(0, 25), linetype = "dashed", color = "blue") +
 #'     theme_bw()
-#' 
+#' # Change the beta and number of points
 #' tt <- wang_engel_tt(0, 25, 35, beta = 0.5, n = 36)
 wang_engel_tt <- function(min_temp, opt_temp, max_temp,
                             beta = 1, n = 101) {
