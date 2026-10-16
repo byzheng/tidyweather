@@ -25,7 +25,7 @@
 #'     geom_hline(yintercept = c(0, 25), linetype = "dashed", color = "blue") +
 #'     theme_bw()
 #' 
-#' wang_engel_tt(0, 25, 35, beta = 0.5, n = 36)
+#' tt <- wang_engel_tt(0, 25, 35, beta = 0.5, n = 36)
 wang_engel_tt <- function(min_temp, opt_temp, max_temp,
                             beta = 1, n = 101) {
     is_single <- function(x) is.numeric(x) && length(x) == 1 && !is.na(x)
