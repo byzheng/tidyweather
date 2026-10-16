@@ -19,3 +19,7 @@
 # tidyweather 0.3.2
 
 * Add a new example weather data
+
+# tidyweather 0.3.3
+
+* Add a new function wang_engel_tt related with thermal time
