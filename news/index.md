@@ -30,3 +30,7 @@ CRAN release: 2026-08-20
 CRAN release: 2026-09-24
 
 - Add a new example weather data
+
+## tidyweather 0.3.3
+
+- Add a new function wang_engel_tt related with thermal time

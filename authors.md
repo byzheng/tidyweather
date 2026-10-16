@@ -7,16 +7,16 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/byzheng/tidyweather/blob/0.3.2/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/byzheng/tidyweather/blob/main/DESCRIPTION)
 
 Zheng B (2026). *tidyweather: Analysis the Weather Data for
-Agriculture*. R package version 0.3.2,
+Agriculture*. R package version 0.3.3,
 <https://tidyweather.bangyou.me/>.
 
     @Manual{,
       title = {tidyweather: Analysis the Weather Data for Agriculture},
       author = {Bangou Zheng},
       year = {2026},
-      note = {R package version 0.3.2},
+      note = {R package version 0.3.3},
       url = {https://tidyweather.bangyou.me/},
     }

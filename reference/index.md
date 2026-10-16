@@ -28,6 +28,8 @@
   : Calculate thermal time using cardinal temperatures
 - [`ttest_ts()`](https://tidyweather.bangyou.me/reference/ttest_ts.md) :
   Significantly t-test with auto-correlation for time serial data
+- [`wang_engel_tt()`](https://tidyweather.bangyou.me/reference/wang_engel_tt.md)
+  : Wang-Engel temperature response function
 - [`weather_options`](https://tidyweather.bangyou.me/reference/weather_options.md)
   : tidyweather options
 - [`write_weather()`](https://tidyweather.bangyou.me/reference/write_weather.md)
