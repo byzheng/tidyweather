@@ -17,11 +17,14 @@
 #' @examples
 #' library(ggplot2)
 #' tt <- wang_engel_tt(0, 25, 35)
-#' res <- tt
-#' res |>
+#' tt |>
 #'     ggplot() +
-#'     geom_line(aes(x = x, y = y), data = res) +
-#'     labs(x = "Temperature", y = "Response")
+#'     geom_line(aes(x = x, y = y)) +
+#'     labs(x = "Temperature", y = "Response") +
+#'     geom_vline(xintercept = c(0, 25, 35), linetype = "dashed", color = "red") +
+#'     geom_hline(yintercept = c(0, 25), linetype = "dashed", color = "blue") +
+#'     theme_bw()
+#' 
 #' wang_engel_tt(0, 25, 35, beta = 0.5, n = 36)
 wang_engel_tt <- function(min_temp, opt_temp, max_temp,
                             beta = 1, n = 101) {
