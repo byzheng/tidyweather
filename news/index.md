@@ -33,4 +33,12 @@ CRAN release: 2026-09-24
 
 ## tidyweather 0.3.3
 
+CRAN release: 2026-10-16
+
 - Add a new function wang_engel_tt related with thermal time
+
+## tidyweather 0.3.4
+
+- Add a new function sun_rise_set to calculate sunrise and sunset times
+  (or the time of the sun reaching a given angle below the horizon) for
+  a vector of dates at a site.

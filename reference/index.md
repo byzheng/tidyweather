@@ -24,6 +24,8 @@
   : Calculate the sphere distance between two points on the Earth
 - [`summarise_weather()`](https://tidyweather.bangyou.me/reference/summarise_weather.md)
   : Summarise Weather Extremes and Key Indicators
+- [`sun_rise_set()`](https://tidyweather.bangyou.me/reference/sun_rise_set.md)
+  : Sunrise and sunset times
 - [`thermal_time()`](https://tidyweather.bangyou.me/reference/thermal_time.md)
   : Calculate thermal time using cardinal temperatures
 - [`ttest_ts()`](https://tidyweather.bangyou.me/reference/ttest_ts.md) :
