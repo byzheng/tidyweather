@@ -5,30 +5,42 @@
 \title{The time for sunrise and sunset
 from 90 degree in am and pm. +ve above the horizon, -ve below the horizon.}
 \usage{
-sun_rise_set(doy, lat, long, timezone = 0, angle = 6, flag = "rise")
+sun_rise_set(
+  date,
+  lat,
+  long,
+  timezone = "UTC",
+  angle = 6,
+  flag = c("rise", "set")
+)
 }
 \arguments{
-\item{doy}{day of year number}
+\item{date}{dates of class \code{Date}.}
 
 \item{lat}{latitude of site (deg)}
 
 \item{long}{longitude of site (deg)}
 
-\item{timezone}{local time}
+\item{timezone}{Olson time zone name of the returned times, such as
+\code{"UTC"} (default) or \code{"Australia/Brisbane"}. See \code{\link[=OlsonNames]{OlsonNames()}}.}
 
 \item{angle}{angle to measure time between, such as twilight (deg).
 angular distance between 90 deg and end of twilight - altitude of sun. +ve up, -ve down.}
 
-\item{flag}{rise or set}
+\item{flag}{\code{"rise"} or \code{"set"}}
 }
 \value{
-Local time in hours.
+A \code{POSIXct} vector in \code{timezone}, on the local calendar day of \code{date}.
 }
 \description{
 The time for sunrise and sunset
 from 90 degree in am and pm. +ve above the horizon, -ve below the horizon.
 }
 \examples{
-sun_rise_set(172, lat = -27.5, long = 153, timezone = 10, angle = 0, flag = "rise")
-sun_rise_set(172, lat = -27.5, long = 153, timezone = 10, angle = 0, flag = "set")
+date <- as.Date("2021-06-21")
+sun_rise_set(date, lat = -27.5, long = 153, angle = 0)
+sun_rise_set(date, lat = -27.5, long = 153, timezone = "Australia/Brisbane",
+             angle = 0, flag = "rise")
+sun_rise_set(date, lat = -27.5, long = 153, timezone = "Australia/Brisbane",
+             angle = 0, flag = "set")
 }

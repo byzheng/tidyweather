@@ -1,18 +1,30 @@
-#' The time for sunrise and sunset
-#' from 90 degree in am and pm. +ve above the horizon, -ve below the horizon.
-#' @param  doy day of year number
+#' The time for sunrise and sunset from 90 degree in am and pm. +ve above the horizon, -ve below the horizon.
+#' 
+#' @param date dates of class `Date`.
 #' @param lat latitude of site (deg)
 #' @param long longitude of site (deg)
-#' @param timezone local time
+#' @param timezone Olson time zone name of the returned times, such as
+#' `"UTC"` (default) or `"Australia/Brisbane"`. See [OlsonNames()].
 #' @param  angle angle to measure time between, such as twilight (deg).
 #' angular distance between 90 deg and end of twilight - altitude of sun. +ve up, -ve down.
-#' @param flag rise or set
-#' @return Local time in hours.
+#' @param flag `"rise"` or `"set"`
+#' @return A `POSIXct` vector in `timezone`, on the local calendar day of `date`.
 #' @examples
-#' sun_rise_set(172, lat = -27.5, long = 153, timezone = 10, angle = 0, flag = "rise")
-#' sun_rise_set(172, lat = -27.5, long = 153, timezone = 10, angle = 0, flag = "set")
+#' date <- as.Date("2021-06-21")
+#' sun_rise_set(date, lat = -27.5, long = 153, angle = 0)
+#' sun_rise_set(date, lat = -27.5, long = 153, timezone = "Australia/Brisbane",
+#'              angle = 0, flag = "rise")
+#' sun_rise_set(date, lat = -27.5, long = 153, timezone = "Australia/Brisbane",
+#'              angle = 0, flag = "set")
 #' @export
-sun_rise_set <- function(doy, lat, long, timezone = 0, angle = 6, flag = 'rise') {
+sun_rise_set <- function(date, lat, long, timezone = "UTC", angle = 6, flag = c("rise", "set")) {
+    flag <- match.arg(flag)
+    stopifnot(inherits(date, "Date"), length(date) > 0, !anyNA(date))
+    stopifnot(is.numeric(lat) && is.numeric(long) && length(lat) == 1 && length(long) == 1)
+    stopifnot(is.character(timezone) && length(timezone) == 1)
+    stopifnot(is.numeric(angle) && length(angle) == 1)
+
+    doy <- as.POSIXlt(date)$yday + 1
     doy_len <- length(doy)
     lat <- rep(lat, length.out = doy_len)
     long <- rep(long, length.out = doy_len)
@@ -56,9 +68,17 @@ sun_rise_set <- function(doy, lat, long, timezone = 0, angle = 6, flag = 'rise')
     HH <- HH / 15
     TT <- HH + RA - (0.06571 * tt) - 6.622
     UT <- TT - lngHour
-    # UT <- (UT + 24 * 100) %% 24
-    localT <- UT + timezone
-    localT <- (localT + 24 * 100) %% 24
+    UT <- (UT + 24 * 100) %% 24
 
-    return(localT)
+    base <- as.POSIXct(format(date), tz = "UTC")
+    result <- base + UT * 3600
+    for (shift in c(-1, 1)) {
+        candidate <- base + UT * 3600 + shift * 86400
+        local_date <- as.Date(format(candidate, "%Y-%m-%d", tz = timezone))
+        current <- as.Date(format(result, "%Y-%m-%d", tz = timezone))
+        use <- current != date & local_date == date
+        result[use] <- candidate[use]
+    }
+    attr(result, "tzone") <- timezone
+    result
 }
