@@ -10,6 +10,7 @@
 <url><loc>https://tidyweather.bangyou.me/reference/check_missing_values.html</loc></url>
 <url><loc>https://tidyweather.bangyou.me/reference/check_weather.html</loc></url>
 <url><loc>https://tidyweather.bangyou.me/reference/day_length.html</loc></url>
+<url><loc>https://tidyweather.bangyou.me/reference/dew_point.html</loc></url>
 <url><loc>https://tidyweather.bangyou.me/reference/index.html</loc></url>
 <url><loc>https://tidyweather.bangyou.me/reference/interpolate_3hr.html</loc></url>
 <url><loc>https://tidyweather.bangyou.me/reference/interpolate_hourly_sin_pp_adjusted.html</loc></url>
@@ -17,6 +18,7 @@
 <url><loc>https://tidyweather.bangyou.me/reference/last_frost_day.html</loc></url>
 <url><loc>https://tidyweather.bangyou.me/reference/number_frost_day.html</loc></url>
 <url><loc>https://tidyweather.bangyou.me/reference/read_weather.html</loc></url>
+<url><loc>https://tidyweather.bangyou.me/reference/relative_humidity.html</loc></url>
 <url><loc>https://tidyweather.bangyou.me/reference/spherical_distance.html</loc></url>
 <url><loc>https://tidyweather.bangyou.me/reference/summarise_weather.html</loc></url>
 <url><loc>https://tidyweather.bangyou.me/reference/sun_rise_set.html</loc></url>

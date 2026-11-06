@@ -85,6 +85,9 @@ and Innovation.
 - [`day_length()`](https://tidyweather.bangyou.me/reference/day_length.md)
   : The time elapsed in hours between the specified sun angle from 90
   degree in am and pm. +ve above the horizon, -ve below the horizon.
+- [`dew_point()`](https://tidyweather.bangyou.me/reference/dew_point.md)
+  : Estimate Dew Point Temperature from Air Temperature and Relative
+  Humidity
 - [`interpolate_3hr()`](https://tidyweather.bangyou.me/reference/interpolate_3hr.md)
   : Interpolate 3-Hourly Temperature Values using sine curve.
 - [`interpolate_hourly_sin_pp_adjusted()`](https://tidyweather.bangyou.me/reference/interpolate_hourly_sin_pp_adjusted.md)
@@ -98,6 +101,9 @@ and Innovation.
   : Calculate the number of frost days
 - [`read_weather()`](https://tidyweather.bangyou.me/reference/read_weather.md)
   : Read weather records from a file list and/or a folder list
+- [`relative_humidity()`](https://tidyweather.bangyou.me/reference/relative_humidity.md)
+  : Estimate Relative Humidity from Air Temperature and Dew Point
+  Temperature
 - [`spherical_distance()`](https://tidyweather.bangyou.me/reference/spherical_distance.md)
   : Calculate the sphere distance between two points on the Earth
 - [`summarise_weather()`](https://tidyweather.bangyou.me/reference/summarise_weather.md)
