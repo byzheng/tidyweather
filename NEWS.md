@@ -27,3 +27,8 @@
 # tidyweather 0.3.4
 
 * Add a new function sun_rise_set to calculate sunrise and sunset times (or the time of the sun reaching a given angle below the horizon) for a vector of dates at a site.
+
+# tidyweather 0.3.5
+
+* Add a new function dp_mint to calculate dew point temperature from minimum temperature and relative humidity.
+* Add a new function rh_from_dp to calculate relative humidity from air temperature and dew point temperature.
