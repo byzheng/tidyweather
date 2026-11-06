@@ -1,14 +1,16 @@
-#' Estimate Dew Point Temperature from Minimum Air Temperature and Relative Humidity
+#' Estimate Dew Point Temperature from Air Temperature and Relative Humidity
 #'
 #' @description
 #' Computes the dew point temperature (°C) using the **Magnus–Tetens approximation**,
 #' a widely used empirical relationship between air temperature, relative humidity,
 #' and the saturation vapor pressure of water vapor. The method provides a good
 #' approximation for typical atmospheric conditions and is suitable for most
-#' meteorological and agricultural applications.
+#' meteorological and agricultural applications. It works for any air temperature
+#' (for example minimum, maximum or mean) with the matching relative humidity.
+#' The inverse is [relative_humidity()].
 #'
-#' @param mint Numeric. Minimum air temperature (°C).
-#' @param minrh Numeric. Relative humidity (%) corresponding to the minimum temperature.
+#' @param temperature Numeric. Air temperature (°C).
+#' @param rh Numeric. Relative humidity (%) corresponding to `temperature`.
 #'
 #' @return Numeric. Dew point temperature (°C).
 #'
@@ -37,22 +39,22 @@
 #'
 #' @examples
 #' # Dew point for 10 °C and 80% RH
-#' dp_mint(10, 80)
+#' dew_point(10, 80)
 #'
 #' # Vectorized input
-#' dp_mint(c(5, 10, 15), c(90, 70, 50))
+#' dew_point(c(5, 10, 15), c(90, 70, 50))
 #'
 #' @export
-dp_mint <- function(mint, minrh) {
-    stopifnot(is.numeric(mint), is.numeric(minrh))
+dew_point <- function(temperature, rh) {
+    stopifnot(is.numeric(temperature), is.numeric(rh))
     a <- 17.62
     b <- 243.12
     
-    if (any(minrh <= 0 | minrh > 100, na.rm = TRUE)) {
+    if (any(rh <= 0 | rh > 100, na.rm = TRUE)) {
         warning("Relative humidity values should be between 0 and 100.")
     }
     
-    gamma <- (a * mint) / (b + mint) + log(minrh / 100)
+    gamma <- (a * temperature) / (b + temperature) + log(rh / 100)
     t_dew <- (b * gamma) / (a - gamma)
     
     return(t_dew)
@@ -63,13 +65,13 @@ dp_mint <- function(mint, minrh) {
 #'
 #' @description
 #' Computes relative humidity (%) from air temperature and dew point temperature
-#' using the **Magnus-Tetens approximation**. This is the inverse of [dp_mint()].
+#' using the **Magnus-Tetens approximation**. This is the inverse of [dew_point()].
 #'
-#' @param temp Numeric. Air temperature (°C).
-#' @param dewpoint Numeric. Dew point temperature (°C). Should not exceed `temp`.
+#' @param temperature Numeric. Air temperature (°C).
+#' @param dewpoint Numeric. Dew point temperature (°C). Should not exceed `temperature`.
 #'
 #' @return Numeric. Relative humidity (%), between 0 and 100 when
-#' `dewpoint <= temp`.
+#' `dewpoint <= temperature`.
 #'
 #' @details
 #' Relative humidity is the ratio of the saturation vapour pressure at the dew
@@ -88,20 +90,20 @@ dp_mint <- function(mint, minrh) {
 #'
 #' @examples
 #' # Relative humidity for 10 °C air temperature and 6.7 °C dew point
-#' rh_from_dp(10, 6.7)
+#' relative_humidity(10, 6.7)
 #'
 #' # Vectorized input
-#' rh_from_dp(c(5, 10, 15), c(3.5, 4.8, 4.7))
+#' relative_humidity(c(5, 10, 15), c(3.5, 4.8, 4.7))
 #'
 #' @export
-rh_from_dp <- function(temp, dewpoint) {
-    stopifnot(is.numeric(temp), is.numeric(dewpoint))
+relative_humidity <- function(temperature, dewpoint) {
+    stopifnot(is.numeric(temperature), is.numeric(dewpoint))
     a <- 17.62
     b <- 243.12
 
-    if (any(dewpoint > temp, na.rm = TRUE)) {
+    if (any(dewpoint > temperature, na.rm = TRUE)) {
         warning("Dew point temperature should not exceed air temperature.")
     }
 
-    100 * exp((a * dewpoint) / (b + dewpoint) - (a * temp) / (b + temp))
+    100 * exp((a * dewpoint) / (b + dewpoint) - (a * temperature) / (b + temperature))
 }

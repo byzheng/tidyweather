@@ -30,5 +30,5 @@
 
 # tidyweather 0.3.5
 
-* Add a new function dp_mint to calculate dew point temperature from minimum temperature and relative humidity.
-* Add a new function rh_from_dp to calculate relative humidity from air temperature and dew point temperature.
+* Add a new function dew_point to calculate dew point temperature from air temperature and relative humidity.
+* Add a new function relative_humidity to calculate relative humidity from air temperature and dew point temperature.
