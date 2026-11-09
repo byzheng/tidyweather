@@ -13,22 +13,30 @@ inverse is
 ## Usage
 
 ``` r
-dew_point(temperature, rh)
+dew_point(temperature, rh, na.action = c("na.pass", "na.fail"))
 ```
 
 ## Arguments
 
 - temperature:
 
-  Numeric. Air temperature (°C).
+  Numeric. Air temperature (°C). Must have the same length as `rh`;
+  inputs are not recycled.
 
 - rh:
 
   Numeric. Relative humidity (%) corresponding to `temperature`.
 
+- na.action:
+
+  Either `"na.pass"` (the default), which propagates missing values
+  without removing them, or `"na.fail"`, which errors if either input
+  contains `NA` or `NaN`.
+
 ## Value
 
-Numeric. Dew point temperature (°C).
+Numeric. Dew point temperature (°C), with the same length as the inputs.
+If either input is entirely missing, the result is entirely `NA`.
 
 ## Details
 

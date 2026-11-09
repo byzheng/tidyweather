@@ -8,23 +8,31 @@ inverse of
 ## Usage
 
 ``` r
-relative_humidity(temperature, dewpoint)
+relative_humidity(temperature, dewpoint, na.action = c("na.pass", "na.fail"))
 ```
 
 ## Arguments
 
 - temperature:
 
-  Numeric. Air temperature (°C).
+  Numeric. Air temperature (°C). Must have the same length as
+  `dewpoint`; inputs are not recycled.
 
 - dewpoint:
 
   Numeric. Dew point temperature (°C). Should not exceed `temperature`.
 
+- na.action:
+
+  Either `"na.pass"` (the default), which propagates missing values
+  without removing them, or `"na.fail"`, which errors if either input
+  contains `NA` or `NaN`.
+
 ## Value
 
 Numeric. Relative humidity (%), between 0 and 100 when
-`dewpoint <= temperature`.
+`dewpoint <= temperature`, with the same length as the inputs. If either
+input is entirely missing, the result is entirely `NA`.
 
 ## Details
 
