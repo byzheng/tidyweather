@@ -9,10 +9,15 @@
 #' (for example minimum, maximum or mean) with the matching relative humidity.
 #' The inverse is [relative_humidity()].
 #'
-#' @param temperature Numeric. Air temperature (°C).
+#' @param temperature Numeric. Air temperature (°C). Must have the same length as
+#'   `rh`; inputs are not recycled.
 #' @param rh Numeric. Relative humidity (%) corresponding to `temperature`.
+#' @param na.action Either `"na.pass"` (the default), which propagates missing
+#'   values without removing them, or `"na.fail"`, which errors if either input
+#'   contains `NA` or `NaN`.
 #'
-#' @return Numeric. Dew point temperature (°C).
+#' @return Numeric. Dew point temperature (°C), with the same length as the
+#'   inputs. If either input is entirely missing, the result is entirely `NA`.
 #'
 #' @details
 #' The dew point temperature is estimated using the Magnus–Tetens equation:
@@ -45,15 +50,20 @@
 #' dew_point(c(5, 10, 15), c(90, 70, 50))
 #'
 #' @export
-dew_point <- function(temperature, rh) {
-    stopifnot(is.numeric(temperature), is.numeric(rh))
+dew_point <- function(temperature, rh, na.action = c("na.pass", "na.fail")) {
+    na.action <- match.arg(na.action)
+    validate_humidity_inputs(temperature, rh, "rh", na.action)
     a <- 17.62
     b <- 243.12
-    
+
+    if (all(is.na(temperature)) || all(is.na(rh))) {
+        return(rep(NA_real_, length(temperature)))
+    }
+        
     if (any(rh <= 0 | rh > 100, na.rm = TRUE)) {
         warning("Relative humidity values should be between 0 and 100.")
     }
-    
+
     gamma <- (a * temperature) / (b + temperature) + log(rh / 100)
     t_dew <- (b * gamma) / (a - gamma)
     
@@ -67,11 +77,16 @@ dew_point <- function(temperature, rh) {
 #' Computes relative humidity (%) from air temperature and dew point temperature
 #' using the **Magnus-Tetens approximation**. This is the inverse of [dew_point()].
 #'
-#' @param temperature Numeric. Air temperature (°C).
+#' @param temperature Numeric. Air temperature (°C). Must have the same length as
+#'   `dewpoint`; inputs are not recycled.
 #' @param dewpoint Numeric. Dew point temperature (°C). Should not exceed `temperature`.
+#' @param na.action Either `"na.pass"` (the default), which propagates missing
+#'   values without removing them, or `"na.fail"`, which errors if either input
+#'   contains `NA` or `NaN`.
 #'
 #' @return Numeric. Relative humidity (%), between 0 and 100 when
-#' `dewpoint <= temperature`.
+#' `dewpoint <= temperature`, with the same length as the inputs. If either
+#' input is entirely missing, the result is entirely `NA`.
 #'
 #' @details
 #' Relative humidity is the ratio of the saturation vapour pressure at the dew
@@ -96,14 +111,35 @@ dew_point <- function(temperature, rh) {
 #' relative_humidity(c(5, 10, 15), c(3.5, 4.8, 4.7))
 #'
 #' @export
-relative_humidity <- function(temperature, dewpoint) {
-    stopifnot(is.numeric(temperature), is.numeric(dewpoint))
+relative_humidity <- function(temperature, dewpoint, na.action = c("na.pass", "na.fail")) {
+    na.action <- match.arg(na.action)
+    validate_humidity_inputs(temperature, dewpoint, "dewpoint", na.action)
     a <- 17.62
     b <- 243.12
+
+
+    if (all(is.na(temperature)) || all(is.na(dewpoint))) {
+        return(rep(NA_real_, length(temperature)))
+    }
 
     if (any(dewpoint > temperature, na.rm = TRUE)) {
         warning("Dew point temperature should not exceed air temperature.")
     }
 
     100 * exp((a * dewpoint) / (b + dewpoint) - (a * temperature) / (b + temperature))
+}
+
+validate_humidity_inputs <- function(temperature, other, other_name, na.action) {
+    is_numeric_or_missing <- function(x) {
+        is.numeric(x) || (is.logical(x) && all(is.na(x)))
+    }
+    if (!is_numeric_or_missing(temperature) || !is_numeric_or_missing(other)) {
+        stop("temperature and ", other_name, " must be numeric.", call. = FALSE)
+    }
+    if (length(temperature) != length(other)) {
+        stop("temperature and ", other_name, " must have the same length.", call. = FALSE)
+    }
+    if (na.action == "na.fail" && (anyNA(temperature) || anyNA(other))) {
+        stop("temperature and ", other_name, " must not contain missing values.", call. = FALSE)
+    }
 }

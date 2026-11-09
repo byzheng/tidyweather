@@ -31,7 +31,7 @@ test_that("dew_point is vectorized and below air temperature when unsaturated", 
 })
 
 test_that("dew_point increases with relative humidity", {
-    result <- dew_point(15, c(20, 40, 60, 80, 100))
+    result <- dew_point(rep(15, 5), c(20, 40, 60, 80, 100))
 
     expect_true(all(diff(result) > 0))
 })
@@ -73,7 +73,7 @@ test_that("relative_humidity is the inverse of dew_point", {
 })
 
 test_that("relative_humidity is vectorized, bounded and decreases with dew point depression", {
-    result <- relative_humidity(20, c(20, 15, 10, 5, 0, -10))
+    result <- relative_humidity(rep(20, 6), c(20, 15, 10, 5, 0, -10))
 
     expect_equal(length(result), 6)
     expect_true(all(result > 0 & result <= 100))
@@ -95,4 +95,38 @@ test_that("relative_humidity warns when dew point exceeds air temperature", {
 test_that("relative_humidity requires numeric input", {
     expect_error(relative_humidity("10", 5))
     expect_error(relative_humidity(10, "5"))
+})
+
+test_that("humidity functions require inputs of equal length", {
+    for (fun in list(dew_point, relative_humidity)) {
+        expect_error(fun(10, c(5, 6)), "same length")
+        expect_error(fun(c(10, 11), 5), "same length")
+        expect_error(fun(numeric(0), 5), "same length")
+        expect_error(fun(c(10, NA), 5, na.action = "na.fail"), "same length")
+        expect_equal(fun(numeric(0), numeric(0)), numeric(0))
+    }
+})
+
+test_that("humidity functions handle missing inputs according to na.action", {
+    for (fun in list(dew_point, relative_humidity)) {
+        expected <- fun(10, 5)
+        expect_equal(fun(c(10, NA, 10), c(5, 5, NA)), c(expected, NA_real_, NA_real_))
+        expect_equal(fun(c(10, NA), c(5, 5), na.action = "na.pass"), c(expected, NA_real_))
+        expect_equal(fun(c(NA, NA), c(5, 5)), rep(NA_real_, 2))
+        expect_equal(fun(c(10, 10), c(NA, NA)), rep(NA_real_, 2))
+        expect_equal(fun(c(NA, NA), c(NA, NA)), rep(NA_real_, 2))
+        expect_identical(fun(c(NaN, NaN), c(5, 5)), rep(NA_real_, 2))
+        expect_equal(fun(10, 5, na.action = "na.fail"), expected)
+        expect_error(fun(c(10, NA), c(5, 5), na.action = "na.fail"), "missing")
+        expect_error(fun(c(10, 10), c(5, NA), na.action = "na.fail"), "missing")
+        expect_error(fun(10, NaN, na.action = "na.fail"), "missing")
+        expect_error(fun(10, 5, na.action = "invalid"), "arg")
+        expect_error(fun(TRUE, 5), "numeric")
+        expect_error(fun(10, NA_character_), "numeric")
+    }
+})
+
+test_that("missing values do not hide existing validation warnings", {
+    expect_warning(dew_point(c(NA, 10), c(80, 120)), "between 0 and 100")
+    expect_warning(relative_humidity(c(NA, 10), c(5, 12)), "should not exceed")
 })

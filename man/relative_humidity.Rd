@@ -4,16 +4,22 @@
 \alias{relative_humidity}
 \title{Estimate Relative Humidity from Air Temperature and Dew Point Temperature}
 \usage{
-relative_humidity(temperature, dewpoint)
+relative_humidity(temperature, dewpoint, na.action = c("na.pass", "na.fail"))
 }
 \arguments{
-\item{temperature}{Numeric. Air temperature (°C).}
+\item{temperature}{Numeric. Air temperature (°C). Must have the same length as
+\code{dewpoint}; inputs are not recycled.}
 
 \item{dewpoint}{Numeric. Dew point temperature (°C). Should not exceed \code{temperature}.}
+
+\item{na.action}{Either \code{"na.pass"} (the default), which propagates missing
+values without removing them, or \code{"na.fail"}, which errors if either input
+contains \code{NA} or \code{NaN}.}
 }
 \value{
 Numeric. Relative humidity (\%), between 0 and 100 when
-\code{dewpoint <= temperature}.
+\code{dewpoint <= temperature}, with the same length as the inputs. If either
+input is entirely missing, the result is entirely \code{NA}.
 }
 \description{
 Computes relative humidity (\%) from air temperature and dew point temperature

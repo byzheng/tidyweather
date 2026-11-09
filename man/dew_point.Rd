@@ -4,15 +4,21 @@
 \alias{dew_point}
 \title{Estimate Dew Point Temperature from Air Temperature and Relative Humidity}
 \usage{
-dew_point(temperature, rh)
+dew_point(temperature, rh, na.action = c("na.pass", "na.fail"))
 }
 \arguments{
-\item{temperature}{Numeric. Air temperature (°C).}
+\item{temperature}{Numeric. Air temperature (°C). Must have the same length as
+\code{rh}; inputs are not recycled.}
 
 \item{rh}{Numeric. Relative humidity (\%) corresponding to \code{temperature}.}
+
+\item{na.action}{Either \code{"na.pass"} (the default), which propagates missing
+values without removing them, or \code{"na.fail"}, which errors if either input
+contains \code{NA} or \code{NaN}.}
 }
 \value{
-Numeric. Dew point temperature (°C).
+Numeric. Dew point temperature (°C), with the same length as the
+inputs. If either input is entirely missing, the result is entirely \code{NA}.
 }
 \description{
 Computes the dew point temperature (°C) using the \strong{Magnus–Tetens approximation},
