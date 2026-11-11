@@ -120,7 +120,7 @@ center_time <- function(timestamps, as = 12, to = c("rise", "set"), ...) {
         seconds <- hour * 3600
         whole <- floor(seconds)
         clock <- sprintf("%02d:%02d:%02d",
-                         whole %/% 3600, (whole %% 3600) %/% 60, whole %% 60)
+                        whole %/% 3600, (whole %% 3600) %/% 60, whole %% 60)
         text <- paste(format(date), clock)
         value <- as.POSIXct(text, format = "%Y-%m-%d %H:%M:%S", tz = timezone)
         if (anyNA(value) ||
@@ -134,8 +134,8 @@ center_time <- function(timestamps, as = 12, to = c("rise", "set"), ...) {
         events <- local_time(event_dates, to)
     } else {
         events <- do.call(sun_rise_set, c(list(date = event_dates,
-                                               timezone = timezone, flag = to),
-                                          dots))
+                                            timezone = timezone, flag = to),
+                                        dots))
     }
     event_seconds <- as.numeric(events)
     if (any(!is.finite(event_seconds)) || any(diff(event_seconds) <= 0)) {
