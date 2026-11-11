@@ -80,6 +80,8 @@ and Innovation.
 
 ## All functions
 
+- [`center_time()`](https://tidyweather.bangyou.me/reference/center_time.md)
+  : Center timestamps on a daily time
 - [`check_weather()`](https://tidyweather.bangyou.me/reference/check_weather.md)
   : Check weather records for data quality issues
 - [`day_length()`](https://tidyweather.bangyou.me/reference/day_length.md)
