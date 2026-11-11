@@ -7,8 +7,8 @@
 center_time(timestamps, as = 12, to = c("rise", "set"), ...)
 }
 \arguments{
-\item{timestamps}{A non-empty \code{POSIXct} vector with finite, non-missing
-values. Its time zone applies to the whole vector.}
+\item{timestamps}{A non-empty \code{POSIXct} vector. Non-missing values must be
+finite. Its time zone applies to the whole vector.}
 
 \item{as}{The desired local clock time of the event, in decimal hours from
 midnight, in \verb{[0, 24)}. Defaults to noon.}
@@ -23,7 +23,10 @@ accepted when \code{to} is numeric.}
 }
 \value{
 A \code{POSIXct} vector of the same length and time zone as \code{timestamps},
-in the original order. If a required local clock time does not exist
+in the original order, with missing timestamps returned as missing.
+If all timestamps are missing, no solar events are calculated and
+arguments passed to \code{\link[=sun_rise_set]{sun_rise_set()}} are not validated.
+If a required local clock time does not exist
 because of a time zone transition, an error is raised. Ambiguous local
 clock times are resolved according to the platform's time zone rules.
 Solar events are calculated for each input date and its adjacent dates;
@@ -33,12 +36,35 @@ errors from \code{\link[=sun_rise_set]{sun_rise_set()}}, including polar day or 
 Shift each timestamp so that its nearest sunrise, sunset, or fixed local
 time falls at a chosen local clock time on the event's calendar date.
 Timestamps exactly halfway between two events use the later event. The
-shift is measured in elapsed seconds; it can therefore cross a daylight
-saving transition.
+shift is measured in elapsed seconds.
 }
 \examples{
 times <- as.POSIXct(c("2021-06-21 06:00", "2021-06-21 18:00"),
                     tz = "Australia/Brisbane")
 center_time(times, to = "rise", latitude = -27.5, longitude = 153)
 center_time(times, to = 6)
+
+# Two days of hourly temperatures, with the 06:00 peak centered at noon.
+hours <- 0:47
+times <- as.POSIXct("2021-06-21 00:00:00", tz = "Australia/Brisbane") +
+  hours * 3600
+temperature <- 20 + 8 * sin(2 * pi * hours / 24)
+centered <- center_time(times, to = 6, as = 12)
+
+plot(times, temperature, type = "o", pch = 16, cex = 0.5,
+     col = "#0072B2", lwd = 2, xaxt = "n",
+     xlim = range(c(times, centered)), ylim = c(10, 30),
+     xlab = "Local date and time (Australia/Brisbane)",
+     ylab = "Temperature (degrees C)",
+     main = "Centering a two-day hourly temperature series")
+ticks <- seq(times[1], max(centered), by = "6 hours")
+axis(1, at = ticks, labels = format(ticks, "\%d \%b\n\%H:\%M",
+                                   tz = "Australia/Brisbane"), cex.axis = 0.75)
+lines(centered, temperature, type = "o", pch = 1, cex = 0.5,
+      col = "#D55E00", lwd = 2, lty = 2)
+abline(v = as.numeric(times[1] + c(6, 12) * 3600),
+       col = c("#0072B2", "#D55E00"), lty = 3)
+legend("topright", legend = c("Original", "Centered (06:00 to 12:00)"),
+       col = c("#0072B2", "#D55E00"), lty = c(1, 2),
+       pch = c(16, 1), lwd = 2, bty = "n")
 }
