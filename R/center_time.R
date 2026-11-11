@@ -38,22 +38,36 @@
 #' temperature <- 20 + 8 * sin(2 * pi * hours / 24)
 #' centered <- center_time(times, to = 6, as = 12)
 #'
-#' plot(times, temperature, type = "o", pch = 16, cex = 0.5,
-#'      col = "#0072B2", lwd = 2, xaxt = "n",
-#'      xlim = range(c(times, centered)), ylim = c(10, 30),
-#'      xlab = "Local date and time (Australia/Brisbane)",
-#'      ylab = "Temperature (degrees C)",
-#'      main = "Centering a two-day hourly temperature series")
-#' ticks <- seq(times[1], max(centered), by = "6 hours")
-#' axis(1, at = ticks, labels = format(ticks, "%d %b\n%H:%M",
-#'                                    tz = "Australia/Brisbane"), cex.axis = 0.75)
-#' lines(centered, temperature, type = "o", pch = 1, cex = 0.5,
-#'       col = "#D55E00", lwd = 2, lty = 2)
-#' abline(v = as.numeric(times[1] + c(6, 12) * 3600),
-#'        col = c("#0072B2", "#D55E00"), lty = 3)
-#' legend("topright", legend = c("Original", "Centered (06:00 to 12:00)"),
-#'        col = c("#0072B2", "#D55E00"), lty = c(1, 2),
-#'        pch = c(16, 1), lwd = 2, bty = "n")
+#' if (requireNamespace("ggplot2", quietly = TRUE)) {
+#'   series <- rbind(
+#'     data.frame(time = times, temperature = temperature, series = "Original"),
+#'     data.frame(time = centered, temperature = temperature,
+#'                series = "Centered (06:00 to 12:00)")
+#'   )
+#'   reference <- data.frame(
+#'     time = times[1] + c(6, 12) * 3600,
+#'     series = c("Original", "Centered (06:00 to 12:00)")
+#'   )
+#'   ggplot2::ggplot(series, ggplot2::aes(x = time, y = temperature,
+#'                                       colour = series, linetype = series)) +
+#'     ggplot2::geom_vline(data = reference, ggplot2::aes(xintercept = time,
+#'                                                        colour = series),
+#'                         linetype = "dotted", show.legend = FALSE) +
+#'     ggplot2::geom_line() +
+#'     ggplot2::geom_point(size = 1) +
+#'     ggplot2::scale_colour_manual(values = c("Original" = "#0072B2",
+#'       "Centered (06:00 to 12:00)" = "#D55E00")) +
+#'     ggplot2::scale_linetype_manual(values = c("Original" = "solid",
+#'       "Centered (06:00 to 12:00)" = "dashed")) +
+#'     ggplot2::scale_x_datetime(breaks = seq(times[1], max(centered), by = "6 hours"),
+#'                               date_labels = "%d %b\n%H:%M",
+#'                               timezone = "Australia/Brisbane") +
+#'     ggplot2::labs(title = "Centering a two-day hourly temperature series",
+#'                   x = "Local date and time (Australia/Brisbane)",
+#'                   y = "Temperature (degrees C)", colour = NULL, linetype = NULL) +
+#'     ggplot2::theme_minimal() +
+#'     ggplot2::theme(legend.position = "bottom")
+#' }
 #' @export
 center_time <- function(timestamps, as = 12, to = c("rise", "set"), ...) {
     if (!inherits(timestamps, "POSIXct") || length(timestamps) < 1) {

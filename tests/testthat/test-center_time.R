@@ -32,6 +32,39 @@ test_that("solar events are centered using local dates and forwarded arguments",
                             longitude = 153, angle = 0))
 })
 
+test_that("UTC solar events are centered at longitudes around the world", {
+    dates <- as.Date(c("2021-06-21", "2021-06-22"))
+    sites <- data.frame(
+        longitude = c(-179, -90, 0, 90, 179),
+        rise_hour = c(18, 12, 6, 0, 18),
+        set_hour = c(6, 0, 18, 12, 6)
+    )
+    targets <- as.POSIXct(paste(dates, "09:30:00"), tz = "UTC")
+
+    for (i in seq_len(nrow(sites))) {
+        for (event in c("rise", "set")) {
+            events <- sun_rise_set(dates, latitude = 0,
+                                longitude = sites$longitude[i],
+                                timezone = "UTC", angle = 0, flag = event)
+            approximate_hour <- sites[[paste0(event, "_hour")]][i]
+            approximate <- as.POSIXct(paste(dates, "00:00:00"), tz = "UTC") +
+                approximate_hour * 3600
+            expect_lt(max(abs(as.numeric(events) - as.numeric(approximate))), 10 * 60)
+
+            offsets <- c(-1800, 0, 1800)
+            times <- as.POSIXct(rep(as.numeric(events), each = length(offsets)) +
+                                    offsets,
+                                origin = "1970-01-01", tz = "UTC")
+            result <- center_time(times, as = 9.5, to = event, latitude = 0,
+                                longitude = sites$longitude[i], angle = 0)
+            expected <- rep(as.numeric(targets), each = length(offsets)) + offsets
+
+            expect_identical(attr(result, "tzone"), "UTC")
+            expect_equal(as.numeric(result), expected, tolerance = 1e-8)
+        }
+    }
+})
+
 test_that("the nearest solar event is used, including midpoint ties", {
     dates <- as.Date(c("2021-06-21", "2021-06-22"))
     events <- sun_rise_set(dates, latitude = -27.5, longitude = 153,
@@ -106,10 +139,10 @@ test_that("center_time validates inputs and propagates solar errors", {
     }
     expect_error(center_time(time, to = 6, latitude = 0), "additional arguments")
     expect_error(center_time(time, latitude = 0, longitude = 0, timezone = "UTC"),
-                 "timezone is taken")
+                "timezone is taken")
     invalid_zone <- time
     attr(invalid_zone, "tzone") <- "not/a/timezone"
     expect_error(center_time(invalid_zone, to = 6), "valid Olson time zone")
     expect_error(center_time(time, latitude = -80, longitude = 0, angle = 0),
-                 "sun never rises")
+                "sun never rises")
 })
