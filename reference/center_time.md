@@ -95,6 +95,7 @@ if (requireNamespace("ggplot2", quietly = TRUE)) {
     ggplot2::labs(title = "Centering a two-day hourly temperature series",
                   x = "Local date and time (Australia/Brisbane)",
                   y = "Temperature (degrees C)", colour = NULL, linetype = NULL) +
-    ggplot2::theme_minimal()
+    ggplot2::theme_minimal() +
+    ggplot2::theme(legend.position = "bottom")
 }
 ```
